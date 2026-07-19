@@ -1,0 +1,98 @@
+% =====================================================================
+%  Slide bảo vệ khóa luận tốt nghiệp
+%  "Nghiên cứu phương pháp xây dựng NeoBERT cho tiếng Việt"
+%  Biên dịch:  latexmk -pdf main.tex     (hoặc: make)
+% =====================================================================
+\documentclass[aspectratio=169,10pt,t]{beamer}   % t = nội dung bám mép trên
+
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage[authoryear,square]{natbib}
+
+\usepackage{vineo-theme}
+
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds,shapes.geometric,
+                decorations.pathreplacing}
+
+\setbeamertemplate{bibliography item}[triangle]
+\graphicspath{{figures/}}
+
+% ------------------------------------------------------------------ metadata
+\title[Khóa luận tốt nghiệp]{Nghiên cứu phương pháp xây dựng\\NeoBERT cho tiếng Việt}
+\author[Trung -- Tú]{Bùi Khắc Trung \and Trần Anh Tú}
+\institute[HCMUS]{Khoa Công nghệ Thông tin, Trường ĐH Khoa học Tự nhiên, ĐHQG-HCM}
+\date[Tháng 07/2026]{Tp. Hồ Chí Minh, tháng 07 năm 2026}
+
+\begin{document}
+
+% ------------------------------------------------------------------ bìa
+\begin{frame}[plain]
+  \centering
+  \vspace{0.2em}
+  {\footnotesize\color{vnNavy}
+   TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN, ĐHQG-HCM\\
+   KHOA CÔNG NGHỆ THÔNG TIN\par}
+
+  \vspace{0.5em}
+  \includegraphics[width=1.35cm]{logo-hcmus}
+
+  \vspace{0.4em}
+  {\footnotesize\bfseries\color{vnSteel} KHÓA LUẬN TỐT NGHIỆP\par}
+
+  \vspace{0.5em}
+  {\color{vnSteel!45}\rule{0.72\textwidth}{0.8pt}\par}
+  \vspace{0.4em}
+  {\large\bfseries\color{vnNavy}
+   NGHIÊN CỨU PHƯƠNG PHÁP XÂY DỰNG\\[2pt]
+   NEOBERT CHO TIẾNG VIỆT\par}
+  \vspace{0.4em}
+  {\color{vnSteel!45}\rule{0.72\textwidth}{0.8pt}\par}
+
+  \vspace{0.9em}
+  \begin{columns}[t]
+    \begin{column}{0.46\textwidth}\centering\footnotesize
+      {\bfseries\color{vnNavy} Giảng viên hướng dẫn}\\[3pt]
+      TS. Nguyễn Hồng Bửu Long\\
+      TS. Lương An Vinh
+    \end{column}
+    \begin{column}{0.46\textwidth}\centering\footnotesize
+      {\bfseries\color{vnNavy} Sinh viên thực hiện}\\[3pt]
+      Bùi Khắc Trung -- 22120396\\
+      Trần Anh Tú -- 22120400
+    \end{column}
+  \end{columns}
+
+  \vfill
+  {\scriptsize\color{vnCite} Tp. Hồ Chí Minh, tháng 07 năm 2026\par}
+  \vspace{0.3em}
+\end{frame}
+
+% ------------------------------------------------------------------ mục lục
+\begin{frame}{Nội dung trình bày}
+  \vspace{0.6em}
+  \begin{columns}[T]
+    \begin{column}{0.62\textwidth}
+      \tableofcontents[subsectionstyle=show/show]
+    \end{column}
+    \begin{column}{0.34\textwidth}
+      \small
+      \begin{block}{Câu hỏi của khóa luận}
+        Làm sao chuyển một mô hình Encoder thế hệ mới sang tiếng Việt
+        \emph{mà không} huấn luyện lại từ đầu?
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+\input{sections/01-gioithieu}
+\input{sections/02-coso}
+\input{sections/03-phuongphap}
+\input{sections/04-thucnghiem}
+\input{sections/05-ketluan}
+\input{sections/06-tailieu}
+
+\end{document}

@@ -1,0 +1,163 @@
+% =====================================================================
+\section{Giới thiệu}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Encoder-only: nền tảng của các bài toán hiểu ngôn ngữ}
+\vspace{0.2em}
+\begin{columns}[T]
+\begin{column}{0.54\textwidth}
+  \textbf{Encoder-only là gì?}
+  \begin{itemize}\itemsep3pt
+    \item Đọc câu theo \emph{cả hai chiều}, sinh ra biểu diễn ngữ nghĩa
+          cho từng từ -- không sinh văn bản.
+    \item Là lựa chọn mặc định cho phân loại văn bản, gán nhãn, hỏi đáp
+          trích xuất, tìm kiếm ngữ nghĩa.
+    \item BERT và RoBERTa vẫn đang được dùng rộng rãi trong thực tế.
+  \end{itemize}
+\end{column}
+
+\begin{column}{0.43\textwidth}
+  \begin{block}{Vấn đề}
+    Trong khi các mô hình sinh văn bản (LLM) tiến hóa liên tục, các mô
+    hình dòng Encoder-only đã \emph{chững lại nhiều năm}, chỉ được cập
+    nhật tiếp từ cuối năm 2024.
+  \end{block}
+\end{column}
+\end{columns}
+
+\vspace{0.5em}
+\centering
+% Mốc thời gian hai dòng mô hình. Trục hoành: 1 đơn vị = 1 năm, gốc = 01/2018,
+% vị trí mốc tính theo tháng phát hành thực tế. Nhãn xếp so le hai tầng để các
+% mốc gần nhau không đè lên nhau. Dòng Encoder dùng nét đứt cho quãng 2021-2024.
+\fitpic{\begin{tikzpicture}[font=\tiny,x=1.62cm,y=1.32cm]
+
+  % ---- dòng mô hình sinh văn bản: nhiều nhóm nghiên cứu, năm nào cũng có mốc
+  \node[anchor=east,text=vnSteel,font=\scriptsize\bfseries] at (-0.3,0.72) {LLM};
+  \draw[vnSteel,thick,-{Latex[length=2mm]}] (-0.2,0.72) -- (7.55,0.72);
+  % tầng gần trục
+  \foreach \x/\lb in {0.42/GPT-1, 2.33/GPT-3, 4.25/PaLM, 5.20/GPT-4}{
+    \fill[vnSteel] (\x,0.72) circle (1.4pt);
+    \node[above=1pt,text=vnSteel] at (\x,0.72) {\lb};
+  }
+  % tầng xa trục
+  \foreach \x/\lb in {1.08/GPT-2, 3.94/Gopher, 4.87/ChatGPT, 6.25/{Llama 3},
+                      7.05/{DeepSeek-R1}}{
+    \fill[vnSteel] (\x,0.72) circle (1.4pt);
+    \draw[vnSteel!45,line width=0.3pt] (\x,0.72) -- (\x,0.94);
+    \node[above=0pt,text=vnSteel] at (\x,0.94) {\lb};
+  }
+
+  % ---- trục năm ở giữa
+  \foreach \x/\yr in {0/2018,1/2019,2/2020,3/2021,4/2022,5/2023,6/2024,7/2025}{
+    \node[text=vnInk!65] at (\x,0.30) {\yr};
+  }
+
+  % ---- dòng Encoder: liền nét -> đứt quãng -> liền nét trở lại
+  \node[anchor=east,text=vnNavy,font=\scriptsize\bfseries] at (-0.3,-0.02) {Encoder};
+  \draw[vnNavy,thick]        (-0.2,-0.02) -- (3.88,-0.02);
+  \draw[vnNavy,thick,dashed] (3.88,-0.02) -- (6.80,-0.02);
+  \draw[vnNavy,thick,-{Latex[length=2mm]}] (6.80,-0.02) -- (7.55,-0.02);
+  % tầng gần trục
+  \foreach \x/\lb in {0.78/BERT, 2.42/DeBERTa}{
+    \fill[vnNavy] (\x,-0.02) circle (1.4pt);
+    \node[below=1pt,text=vnNavy] at (\x,-0.02) {\lb};
+  }
+  % tầng xa trục
+  \foreach \x/\lb in {1.56/RoBERTa, 3.88/{DeBERTaV3}}{
+    \fill[vnNavy] (\x,-0.02) circle (1.4pt);
+    \draw[vnNavy!45,line width=0.3pt] (\x,-0.02) -- (\x,-0.24);
+    \node[below=0pt,text=vnNavy] at (\x,-0.24) {\lb};
+  }
+  % ---- đợt hiện đại hóa: hai mốc chỉ cách nhau 2 tháng nên nhãn phải tách ra,
+  %      ModernBERT lùi hẳn sang trái, NeoBERT xuống tầng dưới cùng.
+  \fill[vnNavy] (6.92,-0.02) circle (1.4pt);
+  \draw[vnNavy!45,line width=0.3pt] (6.92,-0.02) -- (6.66,-0.16);
+  \node[anchor=north east,text=vnNavy,align=right] at (6.64,-0.17) {ModernBERT\\12/2024};
+  \fill[vnRed] (7.08,-0.02) circle (2.2pt);
+  \draw[vnRed!45,line width=0.3pt] (7.08,-0.02) -- (7.08,-0.42);
+  \node[below=0pt,text=vnRed,font=\tiny\bfseries,align=center] at (7.08,-0.42)
+       {NeoBERT\\02/2025};
+\end{tikzpicture}}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{NeoBERT (2025) hiện đại hóa Encoder -- nhưng chỉ có tiếng Anh}
+\vspace{0.3em}
+\begin{columns}[T]
+\begin{column}{0.52\textwidth}
+  \textbf{NeoBERT} \cit{LeBreton2025} đưa các cải tiến của thế hệ LLM
+  trở lại kiến trúc Encoder:
+  \begin{itemize}\itemsep2pt
+    \item \textbf{RoPE} -- mã hóa vị trí bằng phép quay
+    \item \textbf{SwiGLU} -- mạng truyền thẳng có cổng
+    \item \textbf{Pre-RMSNorm} -- chuẩn hóa trước mỗi lớp con
+    \item \textbf{Sâu mà hẹp} -- 28 lớp, kích thước ẩn 768
+  \end{itemize}
+
+  \vspace{0.4em}
+  Chỉ \textbf{250 triệu tham số} nhưng vượt BERT\textsubscript{large} và
+  RoBERTa\textsubscript{large} trên chuẩn đánh giá MTEB, đồng thời hỗ trợ
+  ngữ cảnh \textbf{4.096 token} -- gấp 8 lần BERT.
+\end{column}
+
+\begin{column}{0.45\textwidth}
+  \small
+  \begin{tabular}{@{}l l@{}}
+    \toprule
+    \rowcolor{vnLight}\multicolumn{2}{@{}l@{}}{\bfseries\color{vnNavy} Cấu hình NeoBERT}\\
+    \midrule
+    Số lớp / kích thước ẩn & 28 / 768\\
+    Tham số                & $\approx$ 250 triệu\\
+    Mã hóa vị trí          & RoPE\\
+    Kích hoạt FFN          & SwiGLU\\
+    Chuẩn hóa              & Pre-RMSNorm\\
+    Ngữ cảnh tối đa        & 4.096 token\\
+    Dữ liệu tiền huấn luyện& 2,1 nghìn tỷ token\\
+    Ngôn ngữ               & \hl{chỉ tiếng Anh}\\
+    \bottomrule
+  \end{tabular}
+  \vspace{4pt}
+  {\footnotesize\color{vnCite} Bảng cấu hình theo \citet{LeBreton2025}}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Bài toán: đưa NeoBERT sang tiếng Việt với chi phí chấp nhận được}
+\vspace{0.2em}
+\begin{columns}[T]
+\begin{column}{0.49\textwidth}
+  \textbf{Ba trở ngại}
+  \begin{enumerate}\itemsep2pt
+    \item Encoder tiếng Việt hiện có (PhoBERT \cit{Nguyen2020},
+          ViDeBERTa \cit{Tran2023}) dùng kiến trúc cũ, giới hạn 512 token.
+    \item Huấn luyện lại từ đầu cần \textbf{2,1 nghìn tỷ token} --
+          bất khả thi với nhóm nghiên cứu nhỏ.
+    \item Thay lớp véc-tơ rồi huấn luyện tiếp một cách ngây thơ dễ gây
+          \term{mất thông tin}{catastrophic forgetting}.
+  \end{enumerate}
+\end{column}
+
+\begin{column}{0.49\textwidth}
+  \textbf{Ý tưởng của khóa luận}
+
+  \vspace{2pt}
+  \begin{block}{Tái sử dụng thay vì huấn luyện lại}
+    Giữ nguyên \emph{phần thân} NeoBERT đã học từ tiếng Anh; chỉ thay
+    lớp từ vựng, và khởi tạo lớp mới bằng cách \emph{mượn} không gian
+    ngữ nghĩa tiếng Việt sẵn có của ViDeBERTa.
+  \end{block}
+
+  \vspace{2pt}
+  \textbf{Mục tiêu cụ thể}
+  \begin{itemize}\itemsep1pt
+    \item Xây dựng \textbf{ViNeoBERT} bằng kỹ thuật SALT \cit{Lee2025}
+          có cải tiến.
+    \item Chứng minh bằng thực nghiệm rằng cách này \emph{tiết kiệm hơn
+          nhiều} so với huấn luyện lại.
+  \end{itemize}
+\end{column}
+\end{columns}
+\end{frame}

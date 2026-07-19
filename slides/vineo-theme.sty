@@ -1,0 +1,165 @@
+% =====================================================================
+%  vineo-theme.sty — Beamer theme for the ViNeoBERT thesis defense
+%  Implements the rules documented in ../STYLE_README.md
+% =====================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{vineo-theme}[2026/07/18 ViNeoBERT defense theme]
+
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+\RequirePackage{booktabs}
+\RequirePackage{colortbl}
+\RequirePackage{array}
+
+% Ragged-right paragraph column. Justified p{} columns are narrow enough that
+% TeX stretches inter-word spaces into visible gaps, so tables use L{} instead.
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% ---------------------------------------------------------------- colours
+\definecolor{vnNavy} {HTML}{1F3864}   % frame titles, structure
+\definecolor{vnSteel}{HTML}{2E74B5}   % secondary accent
+\definecolor{vnLight}{HTML}{DEEBF7}   % block / table header fill
+\definecolor{vnInk}  {HTML}{212121}   % body text
+\definecolor{vnRed}  {HTML}{B02A2A}   % key numbers
+\definecolor{vnCite} {HTML}{5B7A9D}   % citations
+
+% ---------------------------------------------------------------- layout
+% No sidebar: the full page width goes to content. Orientation is carried by
+% the section name in the footline plus the outline slide before each chapter.
+\usetheme{default}
+\useinnertheme{default}
+\useoutertheme{default}
+\setbeamertemplate{navigation symbols}{}       % remove clutter
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamersize{text margin left=0.7cm,text margin right=0.7cm}
+
+% Content hugs the top edge — never vertically centred (README §3.1)
+\beamertemplatenavigationsymbolsempty
+
+% ---------------------------------------------------------------- colours applied
+\setbeamercolor{structure}{fg=vnNavy}
+\setbeamercolor{normal text}{fg=vnInk}
+\setbeamercolor{alerted text}{fg=vnRed}
+
+\setbeamercolor{frametitle}{fg=vnNavy,bg=white}
+\setbeamercolor{title}{fg=vnNavy,bg=white}
+\setbeamercolor{subtitle}{fg=vnSteel}
+
+
+\setbeamercolor{block title}{fg=white,bg=vnNavy}
+\setbeamercolor{block body}{fg=vnInk,bg=vnLight!55}
+\setbeamercolor{block title alerted}{fg=white,bg=vnRed}
+\setbeamercolor{block body alerted}{fg=vnInk,bg=vnRed!8}
+\setbeamercolor{block title example}{fg=white,bg=vnSteel}
+\setbeamercolor{block body example}{fg=vnInk,bg=vnSteel!8}
+
+\setbeamercolor{itemize item}{fg=vnSteel}
+\setbeamercolor{itemize subitem}{fg=vnSteel}
+\setbeamercolor{itemize subsubitem}{fg=vnSteel}
+\setbeamercolor{enumerate item}{fg=vnSteel}
+\setbeamercolor{caption name}{fg=vnSteel}
+\setbeamercolor{footline}{fg=white,bg=vnNavy}
+\setbeamercolor{bibliography item}{fg=vnSteel}
+\setbeamercolor{bibliography entry author}{fg=vnNavy}
+
+% ---------------------------------------------------------------- fonts
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{title}{size=\Large,series=\bfseries}
+\setbeamerfont{footline}{size=\tiny}
+\setbeamerfont{caption}{size=\footnotesize}
+\setbeamerfont{block title}{size=\normalsize,series=\bfseries}
+
+\setbeamertemplate{itemize item}{\small\raise0.4pt\hbox{$\blacktriangleright$}}
+\setbeamertemplate{itemize subitem}{\scriptsize\raise0.6pt\hbox{$\bullet$}}
+\setbeamertemplate{caption}[numbered]
+% Numbered outline: gives the chapter structure the sidebar used to show.
+\setbeamertemplate{section in toc}[sections numbered]
+\setbeamertemplate{subsection in toc}[subsections numbered]
+
+% ---------------------------------------------------------------- footline
+% Carries the orientation the sidebar used to provide: which chapter we are in.
+\setbeamertemplate{footline}{%
+  \leavevmode%
+  \hbox{%
+    \begin{beamercolorbox}[wd=.46\paperwidth,ht=2.6ex,dp=1.1ex,leftskip=.7cm]{footline}%
+      \usebeamerfont{footline}\insertsectionhead%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.32\paperwidth,ht=2.6ex,dp=1.1ex,center]{footline}%
+      \usebeamerfont{footline}\insertshortdate%
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.22\paperwidth,ht=2.6ex,dp=1.1ex,right,rightskip=.7cm]{footline}%
+      \usebeamerfont{footline}\insertframenumber\,/\,\inserttotalframenumber%
+    \end{beamercolorbox}%
+  }%
+  \vskip0pt%
+}
+
+
+% ---------------------------------------------------------------- frametitle
+% Title in navy with a thin steel rule underneath.
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip%
+  \vskip4pt%
+  \begin{beamercolorbox}[leftskip=.1cm,rightskip=1.5cm]{frametitle}%
+    \usebeamerfont{frametitle}\insertframetitle%
+    \ifx\insertframesubtitle\@empty\else%
+      \\[-2pt]{\small\normalfont\color{vnSteel}\insertframesubtitle}%
+    \fi%
+    \vskip2pt%
+    % Explicit-width rule, NOT \hrule: \hrule spans the whole box and ignores
+    % rightskip, so it would run straight through the corner logo. Drawn as a
+    % \vrule inside an \hbox with \nointerlineskip so it adds no baseline glue
+    % (a plain \rule starts a paragraph and pushes the frame body down).
+    \nointerlineskip%
+    \hbox{\color{vnSteel!45}%
+      \vrule height 0.6pt width \dimexpr\linewidth-1.35cm\relax}%
+    \vskip-2pt%
+  \end{beamercolorbox}%
+}
+
+% Logo in the top-right corner of every titled frame. Must be appended AFTER
+% the frametitle template above — \setbeamertemplate replaces the template
+% wholesale, so an earlier \addtobeamertemplate would be discarded.
+% The frame title reserves 1.5cm of rightskip so titles never run under it.
+\addtobeamertemplate{frametitle}{}{%
+  \begin{tikzpicture}[remember picture,overlay]
+    \node[anchor=north east,inner sep=4pt] at (current page.north east)
+      {\includegraphics[height=0.8cm]{figures/logo-hcmus}};
+  \end{tikzpicture}%
+}
+
+% ---------------------------------------------------------------- helpers
+% On-slide citation driven by a .bib key, e.g. \cit{Su2024} -> [Su et al., 2024]
+% (README §5). Uses natbib so the reference list stays in sync automatically.
+\newcommand{\cit}[1]{{\footnotesize\color{vnCite}\citep{#1}}}
+% Key number / decisive result — at most one per slide (README §2)
+\newcommand{\hl}[1]{{\color{vnRed}\bfseries #1}}
+% Best value inside a results table
+\newcommand{\best}[1]{{\bfseries #1}}
+% Term introduced for the first time: Vietnamese + English gloss
+\newcommand{\term}[2]{\textbf{#1}\,(\textit{#2})}
+% Bold lead-in above a paragraph. Beamer sets \parskip to 0, so a plain
+% \textbf{...} + blank line runs straight into the text below it. (README §4)
+\newcommand{\lead}[1]{{\bfseries #1}\par\vspace{4pt}}
+% Row highlight for the proposed model in results tables
+\newcommand{\ourrow}{\rowcolor{vnLight}}
+% Wrap any oversized box (TikZ picture, wide table) so it can never run past the
+% text block: shrinks only when needed, never enlarges. (README §6)
+\newcommand{\fitpic}[1]{%
+  \resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{#1}%
+}
+
+\renewcommand{\figurename}{Hình}
+\renewcommand{\tablename}{Bảng}
+
+% Section divider: repeat the outline with the upcoming section highlighted.
+% Skipped for section 1, which already follows the full outline slide.
+\AtBeginSection[]{%
+  \ifnum\value{section}>1\relax
+    \begin{frame}{Nội dung trình bày}
+      \tableofcontents[currentsection,subsectionstyle=show/show/hide]
+    \end{frame}
+  \fi%
+}
+
+\endinput

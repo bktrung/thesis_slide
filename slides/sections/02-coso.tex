@@ -1,0 +1,181 @@
+% =====================================================================
+\section{Cơ sở lý thuyết}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Chỉ hai lớp của mô hình gắn với một ngôn ngữ cụ thể}
+\begin{columns}[T]
+\begin{column}{0.46\textwidth}
+  \lead{Cách Encoder được huấn luyện}
+
+  Mô hình học bằng \term{mô hình hóa ngôn ngữ có mặt nạ}{Masked Language
+  Modeling}: che ngẫu nhiên một số token rồi bắt mô hình đoán lại token
+  gốc dựa vào ngữ cảnh hai bên \cit{Devlin2019}.
+
+  \vspace{0.35em}
+  \textbf{Quan sát then chốt của khóa luận}
+  \begin{itemize}\itemsep2pt
+    \item \emph{Phần thân} Transformer học quy luật ngôn ngữ tổng quát --
+          đây là phần \textbf{tốn kém nhất} khi huấn luyện.
+    \item Chỉ \emph{lớp véc-tơ đầu vào} và \emph{lớp đầu ra} là gắn trực
+          tiếp với bộ từ vựng của một ngôn ngữ.
+  \end{itemize}
+
+  \vspace{0.2em}
+  $\Rightarrow$ Về nguyên tắc, đổi ngôn ngữ chỉ cần thay \hl{hai lớp} này.
+\end{column}
+
+\begin{column}{0.51\textwidth}
+\centering
+\fitpic{\begin{tikzpicture}[font=\scriptsize,node distance=5.5mm]
+  \node[draw=vnRed,fill=vnRed!10,rounded corners=2pt,minimum width=5.2cm,
+        minimum height=7mm] (emb) {Ma trận véc-tơ đầu vào $E$};
+  \node[draw=vnNavy,fill=vnNavy,text=white,rounded corners=2pt,
+        minimum width=5.2cm,minimum height=13mm,above=of emb] (body)
+        {\begin{tabular}{c}Phần thân Transformer -- 28 lớp\\[1pt]
+     \tiny RoPE $\cdot$ SwiGLU $\cdot$ Pre-RMSNorm\end{tabular}};
+ \node[draw=vnRed,fill=vnRed!10,rounded corners=2pt,minimum width=5.2cm,
+    minimum height=7mm,above=of body] (head) {Lớp đầu ra MLM $W_{\mathrm{dec}}$};
+
+ \draw[-{Latex[length=2mm]},vnSteel,thick] (emb)--(body);
+ \draw[-{Latex[length=2mm]},vnSteel,thick] (body)--(head);
+
+ \node[right=2mm of emb,text=vnRed,align=left,font=\tiny] {gắn với\\từ vựng};
+ \node[right=2mm of body,text=vnNavy,align=left,font=\tiny] {độc lập\\ngôn ngữ};
+ \node[right=2mm of head,text=vnRed,align=left,font=\tiny] {gắn với\\từ vựng};
+\end{tikzpicture}}
+\\[5pt]
+{\footnotesize\color{vnCite} Phần đỏ phải thay khi chuyển sang tiếng Việt;
+ phần navy được giữ nguyên}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{NeoBERT khác BERT ở bốn điểm}
+\vspace{0.3em}
+\small
+\begin{tabular}{@{} L{2.9cm} L{4.9cm} L{5.6cm}@{}}
+  \toprule
+  \rowcolor{vnLight}
+  \color{vnNavy}\bfseries Thành phần &
+  \color{vnNavy}\bfseries BERT &
+  \color{vnNavy}\bfseries NeoBERT\\
+  \midrule
+  Mã hóa vị trí &
+  Bảng véc-tơ vị trí tuyệt đối, cộng vào đầu vào &
+  \textbf{RoPE}: quay véc-tơ theo vị trí, đặt bên trong mỗi lớp
+  \cit{Su2024}\\[3pt]
+  Kích hoạt FFN &
+  GELU, mọi chiều qua cùng một phi tuyến &
+  \textbf{SwiGLU}: thêm nhánh cổng chọn lọc thông tin \cit{Shazeer2020}\\[3pt]
+  Chuẩn hóa &
+  LayerNorm đặt \emph{sau} lớp con &
+  \textbf{Pre-RMSNorm}: chuẩn hóa theo độ lớn, đặt \emph{trước}
+  \cit{Zhang2019}\\[3pt]
+  Hình dạng &
+  12 lớp $\times$ 768 (nông, rộng) &
+  \textbf{28 lớp $\times$ 768} -- sâu mà hẹp \cit{Levine2020}\\
+  \bottomrule
+\end{tabular}
+
+\vspace{0.6em}
+\begin{block}{Vì sao điều này quan trọng với đề tài}
+  Bốn thay đổi trên nằm \emph{toàn bộ} trong phần thân. Chúng làm phần thân
+  mạnh hơn -- và vì thế đáng để giữ lại -- nhưng cũng đặt ra hai ràng buộc
+  cho việc thay lớp từ vựng, trình bày ở slide sau.
+\end{block}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Hai đặc điểm của NeoBERT định hình cách chuyển giao}
+\vspace{0.3em}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+  \lead{1. RoPE -- thuận lợi}
+
+  Điểm chú ý giữa hai token chỉ phụ thuộc \emph{khoảng cách} $m-n$:
+  \vspace{-2pt}
+  \[\textstyle q_m^{\top}k_n = x_m^{\top}W_q^{\top}R_{\Theta,\,n-m}W_k\,x_n\]
+  \vspace{-10pt}
+
+  \begin{itemize}\itemsep1pt
+    \item Thông tin vị trí \textbf{không nằm} trong ma trận véc-tơ.
+    \item[$\Rightarrow$] Thay toàn bộ lớp từ vựng tiếng Việt
+          \emph{không đụng chạm} cơ chế vị trí.
+  \end{itemize}
+\end{column}
+
+\begin{column}{0.48\textwidth}
+  \lead{2. Pre-RMSNorm -- ràng buộc}
+
+  Chuẩn hóa chia theo độ lớn véc-tơ:
+  \vspace{-2pt}
+  \[\bar a_i = \frac{a_i}{\mathrm{RMS}(a)}\,g_i\]
+  \vspace{-10pt}
+
+  \begin{itemize}\itemsep1pt
+    \item Lớp véc-tơ đi thẳng vào luồng chính qua kết nối tắt.
+    \item[$\Rightarrow$] Nếu \textbf{độ lớn} véc-tơ mới lệch khỏi thống kê
+          của NeoBERT, sai lệch bị khuếch đại qua 28 lớp.
+  \end{itemize}
+\end{column}
+\end{columns}
+
+\vspace{0.7em}
+\begin{alertblock}{3. Lớp đầu ra không dùng chung trọng số}
+  Khác BERT/RoBERTa, đầu MLM của NeoBERT là một ma trận \emph{độc lập} với
+  ma trận véc-tơ đầu vào. Vì vậy chuyển sang tiếng Việt phải khởi tạo
+  \hl{cả hai ma trận}, mỗi ma trận trong đúng không gian của nó.
+\end{alertblock}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Khởi tạo lớp véc-tơ khi đổi ngôn ngữ -- và kỹ thuật SALT}
+\vspace{0.2em}
+\begin{columns}[T]
+\begin{column}{0.47\textwidth}
+  \lead{Khởi tạo ngẫu nhiên là lựa chọn tồi}
+
+  Phần thân buộc phải học lại từ tín hiệu đầu vào vô nghĩa, dễ phá vỡ
+  biểu diễn đã có \cit{deVries2021}.
+
+  \vspace{0.4em}
+  \textbf{Hướng khắc phục}: khởi tạo token mới bằng \emph{thông tin ngữ
+  nghĩa} đã biết -- WECHSEL \cit{Minixhofer2022}, FOCUS \cit{Dobler2023},
+  OFA \cit{Liu2024}.
+
+  \vspace{0.4em}
+  \textbf{SALT} \cit{Lee2025} đi xa hơn: tái sử dụng trực tiếp không gian
+  véc-tơ của một mô hình \emph{đã tiền huấn luyện} ở ngôn ngữ đích, qua
+  các ánh xạ tuyến tính \emph{cục bộ} theo từng token.
+\end{column}
+
+\begin{column}{0.50\textwidth}
+\centering
+\fitpic{\begin{tikzpicture}[font=\scriptsize,node distance=4mm]
+  \node[draw=vnSteel,fill=vnSteel!10,rounded corners=2pt,
+        minimum width=2.5cm,minimum height=8mm] (src)
+        {\begin{tabular}{c}Không gian\\véc-tơ tiếng Việt\end{tabular}};
+ \node[draw=vnNavy,fill=vnLight,rounded corners=2pt,
+    minimum width=2.5cm,minimum height=8mm,right=16mm of src] (tgt)
+    {\begin{tabular}{c}Không gian\\NeoBERT\end{tabular}};
+ \draw[-{Latex[length=2mm]},vnRed,very thick] (src)--(tgt)
+    node[midway,above,text=vnRed,font=\tiny]{$X_t$}
+        node[midway,below,text=vnRed,font=\tiny]{cục bộ};
+
+  \node[below=7mm of src,text=vnNavy,font=\tiny,align=center] (a1)
+        {điểm neo\\ đã biết cả hai phía};
+  \draw[dashed,vnCite] (a1)--(src);
+  \draw[dashed,vnCite] (a1) to[bend right=12] (tgt);
+\end{tikzpicture}}
+
+\vspace{4pt}
+\begin{block}{Hạn chế với cặp Anh--Việt}
+  \small SALT gốc chỉ lấy điểm neo là các token \emph{trùng mặt chữ}.
+  Anh và Việt khác nhau lớn về hình thái $\Rightarrow$ rất ít điểm neo,
+  độ phủ ngữ nghĩa hẹp.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}

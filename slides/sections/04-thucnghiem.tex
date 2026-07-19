@@ -1,0 +1,407 @@
+% =====================================================================
+\section{Thực nghiệm và đánh giá}
+% =====================================================================
+\subsection{Thiết lập}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Thiết lập thực nghiệm}
+\vspace{0.3em}
+\begin{columns}[T]
+\begin{column}{0.40\textwidth}
+  \textbf{Môi trường}
+  \begin{itemize}\itemsep1pt
+    \item GPU NVIDIA A100 80GB (Google Colab).
+    \item PyTorch + hệ sinh thái Hugging Face.
+  \end{itemize}
+
+  \vspace{0.5em}
+  \textbf{Dữ liệu}
+  \begin{itemize}\itemsep1pt
+    \item Căn chỉnh: $\sim$20 triệu token CulturaX-vi.
+    \item CPT: $\sim$5 tỷ token ($\sim$20GB văn bản), đi qua \emph{đúng một lượt}.
+    \item Mở rộng ngữ cảnh: $\sim$200 triệu token ở độ dài 4.096.
+  \end{itemize}
+
+  \vspace{0.4em}
+  {\footnotesize\color{vnCite} Mọi kết quả tinh chỉnh lấy trung bình 5 seed
+   ngẫu nhiên, báo cáo kèm độ lệch chuẩn.}
+\end{column}
+
+\begin{column}{0.58\textwidth}
+  \scriptsize
+  \begin{tabular}{@{}l r l r r@{}}
+    \toprule
+    \rowcolor{vnLight}
+    \color{vnNavy}\bfseries Mô hình & \color{vnNavy}\bfseries Tham số &
+    \color{vnNavy}\bfseries Kiến trúc & \color{vnNavy}\bfseries Token vi &
+    \color{vnNavy}\bfseries Ngữ cảnh\\
+    \midrule
+    PhoBERT-base      & 135M & RoBERTa & $\sim$140 tỷ & 512\\
+    PhoBERT-base-v2   & 135M & RoBERTa & $>$140 tỷ    & 512\\
+    PhoBERT-large     & 370M & RoBERTa & $\sim$140 tỷ & 512\\
+    XLM-R-base        & 278M & RoBERTa & hàng trăm tỷ & 512\\
+    XLM-R-large       & 560M & RoBERTa & hàng trăm tỷ & 512\\
+    \ourrow
+    \textbf{ViNeoBERT} & \textbf{$\approx$250M} & \textbf{NeoBERT} &
+    \hl{5 tỷ} & \textbf{4.096}\\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{4pt}
+  {\footnotesize\color{vnCite} Các mô hình so sánh
+   \citep{Nguyen2020,Conneau2020}}
+
+  \vspace{0.5em}
+  \begin{block}{Điểm cần chú ý khi đọc mọi kết quả sau}
+    \small ViNeoBERT chỉ tiếp xúc \hl{3,5\%} lượng token tiếng Việt mà
+    PhoBERT-large đã huấn luyện.
+  \end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Bộ đánh giá: 12 tác vụ trên 5 nhóm năng lực}
+\vspace{0.3em}
+\begin{columns}[T]
+\begin{column}{0.56\textwidth}
+  \scriptsize
+  \begin{tabular}{@{} L{2.5cm} L{2.9cm} L{1.9cm}@{}}
+    \toprule
+    \rowcolor{vnLight}
+    \color{vnNavy}\bfseries Nhóm năng lực &
+    \color{vnNavy}\bfseries Bộ dữ liệu &
+    \color{vnNavy}\bfseries Độ đo\\
+    \midrule
+    Hỏi đáp đọc hiểu    & UIT-ViQuAD 2.0            & EM, F1\\
+    Suy luận            & XNLI, ViANLI, QNLI        & Acc, F1-macro\\
+    Phân loại văn bản   & UIT-VSFC, VSMEC, ViCTSD   & F1\\
+    Chấp nhận ngữ pháp  & ViCoLA-syn                & MCC\\
+    Gán nhãn từ loại    & UD-VTB                    & F1-macro\\
+    Tương đồng ngữ nghĩa& STS, Paraphrase           & Spearman, F1\\
+    Biểu diễn câu       & Retrieval, Reranking      & nDCG@10, MRR\\
+    \bottomrule
+  \end{tabular}
+\end{column}
+
+\begin{column}{0.42\textwidth}
+  \textbf{Hai câu hỏi nghiên cứu}
+
+  \vspace{0.3em}
+  \begin{block}{Câu hỏi 1}
+    \small Phương án \emph{khởi tạo} nào tốt nhất?\\
+    $\rightarrow$ so sánh có kiểm soát, cùng ngân sách token.
+  \end{block}
+
+  \begin{block}{Câu hỏi 2}
+    \small Mô hình cuối đạt chất lượng ra sao so với các mô hình hiện có?\\
+    $\rightarrow$ đường cong theo ngân sách + bảng 12 tác vụ.
+  \end{block}
+
+  \vspace{0.2em}
+  {\footnotesize\color{vnCite} UIT-ViQuAD được chọn làm thước đo quyết định vì
+   nó buộc mô hình dùng đến ngữ nghĩa thực sự của từng token.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\subsection{So sánh khởi tạo}
+
+\begin{frame}{SALT có thực sự đưa từ vựng tiếng Việt vào đúng không gian?}
+\vspace{0.2em}
+\begin{columns}[T]
+\begin{column}{0.60\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig-pca-salt}\\[2pt]
+  {\footnotesize\color{vnCite} Hình: lớp véc-tơ tiếng Việt trước và sau SALT,
+   chiếu bằng PCA trên \emph{cùng một hệ trục}}
+\end{column}
+
+\begin{column}{0.38\textwidth}
+  \textbf{Cách đọc hình}
+  \begin{itemize}\itemsep1pt
+    \item Vàng: véc-tơ tiếng Việt (ViDeBERTa). Xanh: véc-tơ NeoBERT gốc.
+    \item Token điểm neo \emph{đã bị loại khỏi hình} -- chúng vốn được sao
+          chép nguyên vẹn nên sẽ tạo vùng chồng lấp giả tạo.
+  \end{itemize}
+
+  \vspace{0.4em}
+  \textbf{Kết quả}
+  \begin{itemize}\itemsep1pt
+    \item Khoảng cách hai tâm giảm từ \textbf{0,8} còn \hl{0,3}; độ trải cũng
+          thu về khớp với NeoBERT.
+    \item[$\Rightarrow$] Phép chiếu đưa từ vựng tiếng Việt về đúng vùng mà
+          phần thân được huấn luyện để xử lý.
+  \end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Hệ số tỉ lệ trọng số đầu ra $\gamma$ là bắt buộc}
+\vspace{0.2em}
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig-gamma-loss}\\[2pt]
+  {\footnotesize\color{vnCite} Hình: mất mát MLM theo hệ số tỉ lệ $\gamma$}
+\end{column}
+
+\begin{column}{0.43\textwidth}
+  \small
+  Ba phương án \emph{giống hệt nhau} về khởi tạo, chỉ khác đúng $\gamma$.
+
+  \vspace{0.4em}
+  \begin{tabular}{@{}l r r@{}}
+    \toprule
+    \rowcolor{vnLight}
+    \color{vnNavy}\bfseries $\gamma$ &
+    \color{vnNavy}\bfseries Mất mát đầu &
+    \color{vnNavy}\bfseries Chuẩn grad\\
+    \midrule
+    1{,}0 & 10,18 & 68,4\\
+    0{,}5 & 8,13  & 15,8\\
+    \ourrow \textbf{0{,}1} & \textbf{7,21} & \textbf{2,1}\\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{0.5em}
+  \begin{itemize}\itemsep1pt
+    \item $\gamma$ lớn: logit \emph{nhiễu} từ ma trận vừa chiếu lấn át tín
+          hiệu tần suất; cập nhật đầu tiên biên độ rất lớn nhưng ít thông
+          tin $\Rightarrow$ \textbf{mắc kẹt} quanh 6,6--6,8.
+    \item $\gamma=0{,}1$: khởi đầu ngay tại entropy unigram rồi hội tụ về
+          \hl{3,14}.
+  \end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{So sánh năm phương án khởi tạo ở cùng ngân sách}
+\vspace{0.1em}
+\centering
+\includegraphics[width=0.78\linewidth]{fig-init-compare}\\[1pt]
+{\footnotesize\color{vnCite} (a) mất mát MLM trên tập đánh giá\quad
+ (b) F1 trên UIT-ViQuAD tại mốc 100 triệu token, thanh lỗi qua 3 seed}
+
+\vspace{0.3em}
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+  \begin{alertblock}{Giá trị của hướng ngữ nghĩa}
+    \footnotesize Đường cơ sở \emph{khớp mô-men} đã có đúng độ lớn, ánh xạ đầu
+    ra và hệ số tần suất -- chỉ thiếu \emph{hướng} véc-tơ. Khoảng cách
+    \hl{$+11{,}2$ điểm} vì thế quy hết về phần lõi của phương pháp.
+  \end{alertblock}
+\end{column}
+
+\begin{column}{0.48\textwidth}
+  \begin{block}{Dùng chung trọng số gây hại}
+    \footnotesize 54,09 so với 56,27 -- hai lớp có vai trò hình học khác nhau.
+    Căn chỉnh với thân đóng băng nâng tiếp lên \textbf{72,15}, độ lệch chuẩn
+    giảm hơn một bậc (1,61 $\to$ 0,12).
+  \end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\subsection{Kết quả mô hình}
+
+\begin{frame}{Quá trình huấn luyện: khởi đầu thấp, hội tụ nhanh}
+\vspace{0.2em}
+\begin{columns}[T]
+\begin{column}{0.58\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig-cpt-loss}\\[2pt]
+  {\footnotesize\color{vnCite} Hình: đường cong mất mát giai đoạn CPT
+   theo lịch WSD}
+\end{column}
+
+\begin{column}{0.40\textwidth}
+  \begin{itemize}\itemsep2pt
+    \item Nhờ khởi tạo SALT, mất mát bắt đầu ở $\approx$\textbf{6,5} -- đã
+          nằm \emph{dưới} mức đoán ngẫu nhiên ($\approx$10,3) và gần entropy
+          unigram tiếng Việt ($\approx$7,3).
+    \item Chỉ trong \textbf{0,2 tỷ token} đầu, mất mát đã rơi xuống dưới 2,0.
+    \item Pha làm nguội cuối kéo mất mát về $\approx$\textbf{1,1};
+          perplexity trên tập đánh giá giảm còn \hl{3,2}.
+  \end{itemize}
+
+  \vspace{0.4em}
+  {\footnotesize $\Rightarrow$ Phần thân kế thừa từ NeoBERT \emph{không phải}
+   học lại tiếng Việt từ đầu.}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Phần lớn chất lượng đến từ những trăm triệu token đầu tiên}
+\vspace{0.2em}
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig-f1-tokens}\\[2pt]
+  {\footnotesize\color{vnCite} Hình: F1 trên UIT-ViQuAD theo số token CPT
+   (thang log)}
+\end{column}
+
+\begin{column}{0.43\textwidth}
+  \small
+  \begin{tabular}{@{}l r@{}}
+    \toprule
+    \rowcolor{vnLight}
+    \color{vnNavy}\bfseries Mốc ngân sách &
+    \color{vnNavy}\bfseries F1\\
+    \midrule
+    0,1 tỷ token (2\% ngân sách) & 72,15\\
+    0,5 tỷ token                 & 74,79\\
+    \ourrow 5 tỷ token (cuối)    & \hl{76,62}\\
+    \midrule
+    XLM-R-base (cuối)            & 73,32\\
+    PhoBERT-base-v2              & 77,4\\
+    PhoBERT-large                & 78,0\\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{0.5em}
+  \begin{itemize}\itemsep1pt
+    \item Vượt XLM-R-base ngay tại mốc \textbf{0,5 tỷ token}.
+    \item Còn cách PhoBERT-base-v2 \textbf{0,8} điểm và PhoBERT-large
+          \textbf{1,4} điểm -- xu hướng vẫn đang đi lên.
+  \end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Kết quả trên 12 tác vụ hiểu tiếng Việt}
+\vspace{0.2em}
+\scriptsize
+\begin{tabular}{@{}l l r r r r r@{}}
+  \toprule
+  \rowcolor{vnLight}
+  \color{vnNavy}\bfseries Tác vụ & \color{vnNavy}\bfseries Độ đo &
+  \color{vnNavy}\bfseries PhoBERT-v2 & \color{vnNavy}\bfseries PhoBERT-L &
+  \color{vnNavy}\bfseries XLM-R-B & \color{vnNavy}\bfseries XLM-R-L &
+  \color{vnNavy}\bfseries ViNeoBERT\\
+  \midrule
+  UIT-VSFC        & F1-w        & 0,9345 & \best{0,9356} & 0,9281 & 0,9312 & 0,9284\\
+  UIT-VSMEC       & F1-m        & \best{0,6415} & 0,6132 & 0,6145 & 0,3125 & 0,6163\\
+  UIT-ViCTSD      & F1-m        & 0,7455 & \best{0,7526} & 0,7110 & 0,5759 & 0,7315\\
+  ViCoLA-syn      & MCC         & \best{0,8103} & 0,7915 & 0,7827 & 0,4845 & 0,7789\\
+  XNLI (vi)       & Acc         & 0,7720 & 0,7769 & 0,7541 & \best{0,8000} & 0,7714\\
+  ViANLI          & F1-m        & \best{0,4529} & 0,3882 & 0,3625 & 0,1666 & 0,4273\\
+  QNLI (vi)       & Acc         & 0,8872 & 0,8861 & 0,8592 & \best{0,8940} & 0,8791\\
+  \ourrow
+  UD-VTB (POS)    & F1-m        & 0,7799 & 0,7879 & 0,7827 & 0,8062 & \best{\color{vnRed}0,8089}\\
+  STS (vi)        & Spearman    & 0,8557 & 0,8509 & 0,8226 & \best{0,8644} & 0,8392\\
+  Paraphrase      & F1-m        & 0,9351 & 0,9400 & 0,9016 & \best{0,9437} & 0,9276\\
+  Retrieval       & nDCG@10     & \best{0,4719} & 0,4659 & 0,1386 & 0,2565 & 0,4061\\
+  Reranking       & MRR         & \best{0,8922} & 0,8794 & 0,5282 & 0,6741 & 0,8448\\
+  \bottomrule
+\end{tabular}
+
+\vspace{0.4em}
+\begin{columns}[T]
+\begin{column}{0.49\textwidth}
+  \footnotesize
+  \begin{itemize}\itemsep0pt
+    \item Cao hơn XLM-R-base \hl{11/12} tác vụ (12/13 nếu tính đọc hiểu).
+    \item \textbf{Dẫn đầu cả bảng} ở gán nhãn từ loại.
+  \end{itemize}
+\end{column}
+\begin{column}{0.49\textwidth}
+  \footnotesize
+  \begin{itemize}\itemsep0pt
+    \item XLM-R-large \emph{bất ổn} rõ rệt trên dữ liệu nhỏ (VSMEC 0,31;
+          ViANLI 0,17); ViNeoBERT ổn định trên cả 12 tác vụ.
+    \item Điểm mạnh tập trung ở biểu diễn \emph{cấp token} -- đúng năng lực
+          kế thừa từ phần thân 28 lớp.
+  \end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Luận điểm trung tâm: hiệu quả dữ liệu}
+\vspace{0.3em}
+\begin{columns}[T]
+\begin{column}{0.55\textwidth}
+  \small
+  \begin{tabular}{@{}l r r@{}}
+    \toprule
+    \rowcolor{vnLight}
+    \color{vnNavy}\bfseries Mô hình &
+    \color{vnNavy}\bfseries Token tiếng Việt &
+    \color{vnNavy}\bfseries F1 ViQuAD\\
+    \midrule
+    PhoBERT-large   & $\sim$140 tỷ (40 lượt) & 78,0\\
+    PhoBERT-base-v2 & $>$140 tỷ              & 77,4\\
+    XLM-R-base      & hàng trăm tỷ           & 73,3\\
+    \ourrow
+    \textbf{ViNeoBERT} & \hl{5 tỷ (1 lượt)}  & \textbf{76,6}\\
+    \bottomrule
+  \end{tabular}
+
+  \vspace{0.6em}
+  \fitpic{\begin{tikzpicture}[font=\scriptsize,x=1cm,y=0.42cm]
+    \fill[vnNavy!25] (0,0) rectangle (7.8,0.8);
+    \fill[vnRed]     (0,0) rectangle (0.273,0.8);
+    \node[right,text=vnNavy,font=\tiny] at (0.4,0.4)
+         {PhoBERT-large: $\sim$140 tỷ token};
+    \node[text=vnRed,font=\tiny,anchor=north west] at (0,-0.15)
+         {ViNeoBERT: 5 tỷ (3,5\%)};
+  \end{tikzpicture}}
+\end{column}
+
+\begin{column}{0.43\textwidth}
+  \begin{block}{Con số đáng nói nhất}
+    \small Với \hl{3,5\%} lượng token mà PhoBERT-large đã huấn luyện,
+    ViNeoBERT đạt \textbf{98,3\%} điểm F1 của mô hình đó -- dù
+    PhoBERT-large lớn gấp 1,5 lần về tham số.
+  \end{block}
+
+  \vspace{0.3em}
+  \begin{itemize}\itemsep1pt
+    \item Xác nhận trực tiếp giả thuyết của khóa luận: \emph{tái sử dụng}
+          không gian biểu diễn cho phép kế thừa năng lực phần thân thay vì
+          học lại từ đầu.
+    \item Có ý nghĩa đặc biệt với các ngôn ngữ ít tài nguyên.
+  \end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Biến trần 4.096 token thành năng lực dùng được}
+\vspace{0.2em}
+\begin{columns}[T]
+\begin{column}{0.57\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{fig-pppl-ctx}\\[2pt]
+  {\footnotesize\color{vnCite} Hình: pseudo-perplexity theo độ dài chuỗi,
+   trước và sau pha mở rộng ngữ cảnh}
+\end{column}
+
+\begin{column}{0.41\textwidth}
+  \small
+  Toàn bộ CPT chạy ở độ dài 1.024 token. Sau đó huấn luyện thêm
+  \textbf{$\sim$200 triệu token} ($\sim$4\% ngân sách) ở độ dài 4.096.
+
+  \vspace{0.5em}
+  \begin{itemize}\itemsep2pt
+    \item \textbf{Trước}: nhờ tính tương đối của RoPE, mô hình ngoại suy ổn
+          định tới $\approx$2.500--3.000 token, sau đó chất lượng
+          \emph{giảm nhanh} (nhiều điểm vượt 10).
+    \item \textbf{Sau}: pseudo-perplexity phẳng quanh \hl{2--3} trên toàn dải
+          tới 4.096 token.
+  \end{itemize}
+
+  \vspace{0.3em}
+  {\footnotesize\color{vnCite} Đo theo đúng giao thức của NeoBERT
+   \citep{Salazar2020}.}
+\end{column}
+\end{columns}
+\end{frame}

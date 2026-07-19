@@ -1,0 +1,90 @@
+% =====================================================================
+\section{Kết luận và hướng phát triển}
+% =====================================================================
+
+% ---------------------------------------------------------------------
+\begin{frame}{Kết luận}
+\vspace{0.3em}
+\begin{columns}[T]
+\begin{column}{0.49\textwidth}
+  \textbf{Đóng góp của khóa luận}
+  \begin{itemize}\itemsep2pt
+    \item \textbf{ViNeoBERT} -- Encoder hiện đại $\approx$250 triệu tham số
+          cho tiếng Việt, kế thừa RoPE/SwiGLU/Pre-RMSNorm và trần ngữ cảnh
+          4.096 token.
+    \item \textbf{Quy trình chuyển đổi ngôn ngữ} ba giai đoạn, lần đầu áp
+          dụng cho một kiến trúc Encoder thế hệ mới.
+    \item \textbf{Ba cải tiến so với SALT gốc}: điểm neo theo cặp dịch,
+          khởi tạo riêng lớp đầu ra, giai đoạn căn chỉnh với thân đóng băng.
+    \item \textbf{Bộ mã nguồn công khai} cùng toàn bộ kịch bản huấn luyện.
+  \end{itemize}
+\end{column}
+
+\begin{column}{0.49\textwidth}
+  \textbf{Kết quả chính}
+  \begin{itemize}\itemsep2pt
+    \item \hl{76,62} điểm F1 trên UIT-ViQuAD -- hơn XLM-R-base 3,3 điểm.
+    \item Cao hơn XLM-R-base ở \textbf{11/12} tác vụ; dẫn đầu cả bảng ở gán
+          nhãn từ loại.
+    \item Từng lựa chọn thiết kế đều được kiểm chứng có kiểm soát:
+          $\gamma=0{,}1$, khởi tạo riêng hai ma trận (67,52 so với 54,09),
+          căn chỉnh với thân đóng băng ($-26\%$ perplexity).
+    \item Ngữ cảnh 4.096 token trở thành năng lực dùng được với chỉ
+          $\sim$200 triệu token bổ sung.
+    \item[$\Rightarrow$] Tất cả đạt được với \hl{3,5\%} lượng token của
+          PhoBERT-large.
+  \end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Hạn chế và hướng phát triển}
+\vspace{0.3em}
+\begin{columns}[T]
+\begin{column}{0.47\textwidth}
+  \textbf{Hạn chế}
+  \begin{itemize}\itemsep2pt
+    \item \textbf{Ngân sách huấn luyện}: 5 tỷ token vẫn nhỏ; chưa vượt
+          PhoBERT-base-v2 ở nhóm phân loại câu ngắn.
+    \item \textbf{Phạm vi đánh giá}: chưa khảo sát nhận dạng thực thể có tên;
+          Retrieval--Reranking mới chạy một lần nên chưa ước lượng phương sai.
+    \item \textbf{Ngữ cảnh dài}: mới kiểm chứng bằng độ đo nội tại
+          (pseudo-perplexity), chưa có tác vụ ứng dụng.
+    \item \textbf{Tokenizer}: ảnh hưởng của việc không tách từ chưa được
+          phân tích riêng.
+  \end{itemize}
+\end{column}
+
+\begin{column}{0.50\textwidth}
+  \textbf{Hướng phát triển}
+  \begin{enumerate}\itemsep2pt
+    \item \textbf{Mở rộng ngân sách CPT} -- đường cong F1 vẫn đang đi lên.
+    \item \textbf{Trộn lại 5--10\% dữ liệu tiếng Anh} như cơ chế phát lại
+          (replay) để giảm mất thông tin \cit{Elhady2025}.
+    \item \textbf{Đánh giá trên tác vụ ngữ cảnh dài} (hỏi đáp đa đoạn, truy
+          xuất tài liệu); vượt trần 4.096 token bằng YaRN \cit{Peng2023}.
+    \item \textbf{Mở rộng bộ đánh giá} -- NER, truy xuất quy mô lớn, lặp lại
+          nhóm biểu diễn câu qua nhiều seed.
+    \item \textbf{Tổng quát hóa quy trình} sang ngôn ngữ ít tài nguyên khác
+          và kiến trúc nền khác.
+  \end{enumerate}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}[plain]
+  \vfill
+  \centering
+  {\color{vnSteel!45}\rule{0.55\textwidth}{0.8pt}\par}
+  \vspace{0.7em}
+  {\Large\bfseries\color{vnNavy} Xin chân thành cảm ơn quý thầy cô\\[4pt]
+   đã lắng nghe phần trình bày.\par}
+  \vspace{0.7em}
+  {\color{vnSteel!45}\rule{0.55\textwidth}{0.8pt}\par}
+
+  \vspace{1.2em}
+  {\small\color{vnCite} Nhóm rất mong nhận được các ý kiến đóng góp của hội đồng.\par}
+  \vfill
+\end{frame}

@@ -1,0 +1,166 @@
+\begin{thebibliography}{}
+
+\bibitem[Bojanowski et~al., 2017]{Bojanowski2017}
+Bojanowski, P., Grave, E., Joulin, A., and Mikolov, T. (2017).
+\newblock Enriching word vectors with subword information.
+\newblock {\em Transactions of the Association for Computational Linguistics},
+  5:135--146.
+
+\bibitem[Conneau et~al., 2020]{Conneau2020}
+Conneau, A., Khandelwal, K., Goyal, N., et~al. (2020).
+\newblock Unsupervised cross-lingual representation learning at scale.
+\newblock In {\em Proceedings of ACL}, pages 8440--8451.
+
+\bibitem[de~Vries and Nissim, 2021]{deVries2021}
+de~Vries, W. and Nissim, M. (2021).
+\newblock As good as new. how to successfully recycle {E}nglish {GPT-2} to make
+  models for other languages.
+\newblock In {\em Findings of the Association for Computational Linguistics:
+  ACL-IJCNLP 2021}.
+
+\bibitem[Devlin et~al., 2019]{Devlin2019}
+Devlin, J., Chang, M.-W., Lee, K., and Toutanova, K. (2019).
+\newblock {BERT}: Pre-training of deep bidirectional transformers for language
+  understanding.
+\newblock In {\em Proceedings of NAACL-HLT}, pages 4171--4186.
+
+\bibitem[Dobler and de~Melo, 2023]{Dobler2023}
+Dobler, K. and de~Melo, G. (2023).
+\newblock {FOCUS}: Effective embedding initialization for monolingual
+  specialization of multilingual models.
+\newblock In {\em Proceedings of EMNLP}.
+
+\bibitem[Elhady et~al., 2025]{Elhady2025}
+Elhady, A., Agirre, E., and Artetxe, M. (2025).
+\newblock Emergent abilities of large language models under continued
+  pretraining for language adaptation.
+\newblock In {\em Proceedings of ACL}.
+
+\bibitem[Ethayarajh, 2019]{Ethayarajh2019}
+Ethayarajh, K. (2019).
+\newblock How contextual are contextualized word representations? comparing the
+  geometry of {BERT}, {ELM}o, and {GPT-2} embeddings.
+\newblock In {\em Proceedings of EMNLP-IJCNLP}.
+
+\bibitem[Gao et~al., 2019]{Gao2019}
+Gao, J., He, D., Tan, X., Qin, T., Wang, L., and Liu, T.-Y. (2019).
+\newblock Representation degeneration problem in training natural language
+  generation models.
+\newblock In {\em International Conference on Learning Representations (ICLR)}.
+
+\bibitem[Hu et~al., 2024]{Hu2024}
+Hu, S., Tu, Y., Han, X., He, C., Cui, G., Long, X., et~al. (2024).
+\newblock {MiniCPM}: Unveiling the potential of small language models with
+  scalable training strategies.
+\newblock {\em arXiv preprint arXiv:2404.06395}.
+
+\bibitem[Ibrahim et~al., 2024]{Ibrahim2024}
+Ibrahim, A., Th{\'e}rien, B., Gupta, K., et~al. (2024).
+\newblock Simple and scalable strategies to continually pre-train large
+  language models.
+\newblock {\em Transactions on Machine Learning Research (TMLR)}.
+
+\bibitem[Junczys-Dowmunt et~al., 2018]{Junczys2018}
+Junczys-Dowmunt, M., Grundkiewicz, R., Dwojak, T., et~al. (2018).
+\newblock Marian: Fast neural machine translation in {C++}.
+\newblock In {\em Proceedings of ACL 2018, System Demonstrations}.
+
+\bibitem[Le~Breton et~al., 2025]{LeBreton2025}
+Le~Breton, L., Fournier, Q., El~Mezouar, M., Morris, J.~X., and Chandar, S.
+  (2025).
+\newblock {NeoBERT}: A next-generation {BERT}.
+\newblock {\em arXiv preprint arXiv:2502.19587}.
+
+\bibitem[Lee et~al., 2025]{Lee2025}
+Lee, S., Hong, S., Moon, H., and Lim, H. (2025).
+\newblock Semantic aware linear transfer by recycling pre-trained language
+  models for cross-lingual transfer.
+\newblock In {\em Findings of the Association for Computational Linguistics:
+  ACL 2025}.
+
+\bibitem[Levine et~al., 2020]{Levine2020}
+Levine, Y., Wies, N., Sharir, O., Bata, H., and Shashua, A. (2020).
+\newblock The depth-to-width interplay in self-attention.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)}.
+
+\bibitem[Liu et~al., 2024]{Liu2024}
+Liu, Y., Lin, P., Wang, M., and Sch{\"u}tze, H. (2024).
+\newblock {OFA}: A framework of initializing unseen subword embeddings for
+  efficient large-scale multilingual continued pretraining.
+\newblock In {\em Findings of the Association for Computational Linguistics:
+  NAACL 2024}.
+
+\bibitem[Liu et~al., 2019]{Liu2019}
+Liu, Y., Ott, M., Goyal, N., Du, J., Joshi, M., Chen, D., Levy, O., Lewis, M.,
+  Zettlemoyer, L., and Stoyanov, V. (2019).
+\newblock {RoBERTa}: A robustly optimized {BERT} pretraining approach.
+\newblock {\em arXiv preprint arXiv:1907.11692}.
+
+\bibitem[Martins and Astudillo, 2016]{Martins2016}
+Martins, A. F.~T. and Astudillo, R.~F. (2016).
+\newblock From softmax to sparsemax: A sparse model of attention and
+  multi-label classification.
+\newblock In {\em Proceedings of the 33rd International Conference on Machine
+  Learning (ICML)}.
+
+\bibitem[Meister et~al., 2023]{Meister2023}
+Meister, C., Stokowiec, W., Pimentel, T., Yu, L., Rimell, L., and Kuncoro, A.
+  (2023).
+\newblock A natural bias for language generation models.
+\newblock In {\em Proceedings of ACL}.
+
+\bibitem[Minixhofer et~al., 2022]{Minixhofer2022}
+Minixhofer, B., Paischer, F., and Rekabsaz, N. (2022).
+\newblock {WECHSEL}: Effective initialization of subword embeddings for
+  cross-lingual transfer of monolingual language models.
+\newblock In {\em Proceedings of NAACL-HLT}, pages 3992--4006.
+
+\bibitem[Nguyen and Nguyen, 2020]{Nguyen2020}
+Nguyen, D.~Q. and Nguyen, A.~T. (2020).
+\newblock {PhoBERT}: Pre-trained language models for {V}ietnamese.
+\newblock In {\em Findings of the Association for Computational Linguistics:
+  EMNLP 2020}, pages 1037--1042.
+
+\bibitem[Nguyen et~al., 2024]{Nguyen2024}
+Nguyen, T., Nguyen, C.~V., Lai, V.~D., et~al. (2024).
+\newblock {CulturaX}: A cleaned, enormous, and multilingual dataset for large
+  language models in 167 languages.
+\newblock In {\em Proceedings of LREC-COLING}, pages 4226--4237.
+
+\bibitem[Ormazabal et~al., 2019]{Ormazabal2019}
+Ormazabal, A., Artetxe, M., Labaka, G., Soroa, A., and Agirre, E. (2019).
+\newblock Analyzing the limitations of cross-lingual word embedding mappings.
+\newblock In {\em Proceedings of ACL}, pages 4990--4995.
+
+\bibitem[Peng et~al., 2023]{Peng2023}
+Peng, B., Quesnelle, J., Fan, H., and Shippole, E. (2023).
+\newblock {YaRN}: Efficient context window extension of large language models.
+\newblock In {\em arXiv preprint arXiv:2309.00071}.
+
+\bibitem[Salazar et~al., 2020]{Salazar2020}
+Salazar, J., Liang, D., Nguyen, T.~Q., and Kirchhoff, K. (2020).
+\newblock Masked language model scoring.
+\newblock In {\em Proceedings of ACL}, pages 2699--2712.
+
+\bibitem[Shazeer, 2020]{Shazeer2020}
+Shazeer, N. (2020).
+\newblock {GLU} variants improve transformer.
+\newblock {\em arXiv preprint arXiv:2002.05202}.
+
+\bibitem[Su et~al., 2024]{Su2024}
+Su, J., Lu, Y., Pan, S., Murtadha, A., Wen, B., and Liu, Y. (2024).
+\newblock {RoFormer}: Enhanced transformer with rotary position embedding.
+\newblock {\em Neurocomputing}, 568.
+
+\bibitem[Tran et~al., 2023]{Tran2023}
+Tran, C.~D., Pham, N.~H., Nguyen, A., Hy, T.~S., and Vu, T. (2023).
+\newblock {ViDeBERTa}: A powerful pre-trained language model for {V}ietnamese.
+\newblock In {\em Findings of the Association for Computational Linguistics:
+  EACL 2023}, pages 1071--1078.
+
+\bibitem[Zhang and Sennrich, 2019]{Zhang2019}
+Zhang, B. and Sennrich, R. (2019).
+\newblock Root mean square layer normalization.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)}.
+
+\end{thebibliography}

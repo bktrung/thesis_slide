@@ -1,0 +1,13 @@
+\babel@toc {vietnamese}{}\relax 
+\beamer@sectionintoc {1}{Giới thiệu}{3}{0}{1}
+\beamer@sectionintoc {2}{Cơ sở lý thuyết}{6}{0}{2}
+\beamer@sectionintoc {3}{Phương pháp đề xuất}{11}{0}{3}
+\beamer@subsectionintoc {3}{1}{Tổng quan}{12}{0}{3}
+\beamer@subsectionintoc {3}{2}{Tập điểm neo}{14}{0}{3}
+\beamer@subsectionintoc {3}{3}{Khởi tạo SALT}{16}{0}{3}
+\beamer@subsectionintoc {3}{4}{Huấn luyện}{19}{0}{3}
+\beamer@sectionintoc {4}{Thực nghiệm và đánh giá}{20}{0}{4}
+\beamer@subsectionintoc {4}{1}{Thiết lập}{21}{0}{4}
+\beamer@subsectionintoc {4}{2}{So sánh khởi tạo}{23}{0}{4}
+\beamer@subsectionintoc {4}{3}{Kết quả mô hình}{26}{0}{4}
+\beamer@sectionintoc {5}{Kết luận và hướng phát triển}{31}{0}{5}
