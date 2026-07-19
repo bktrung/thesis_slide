@@ -83,11 +83,11 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
-\begin{frame}{NeoBERT (2025) hiện đại hóa Encoder -- nhưng chỉ có tiếng Anh}
+\begin{frame}{NeoBERT}
 \vspace{0.3em}
 \begin{columns}[T]
 \begin{column}{0.52\textwidth}
-  \textbf{NeoBERT} \cit{LeBreton2025} đưa các cải tiến của thế hệ LLM
+  \textbf{NeoBERT} đưa các cải tiến của thế hệ LLM
   trở lại kiến trúc Encoder:
   \begin{itemize}\itemsep2pt
     \item \textbf{RoPE} -- mã hóa vị trí bằng phép quay
@@ -133,8 +133,9 @@
   \begin{enumerate}\itemsep2pt
     \item Encoder tiếng Việt hiện có (PhoBERT \cit{Nguyen2020},
           ViDeBERTa \cit{Tran2023}) dùng kiến trúc cũ, giới hạn 512 token.
-    \item Huấn luyện lại từ đầu cần \textbf{2,1 nghìn tỷ token} --
-          bất khả thi với nhóm nghiên cứu nhỏ.
+    \item NeoBERT gốc được huấn luyện trên \textbf{2,1 nghìn tỷ token};
+          huấn luyện lại từ đầu ở quy mô tương đương vượt quá nguồn lực
+          của nhóm.
     \item Thay lớp véc-tơ rồi huấn luyện tiếp một cách ngây thơ dễ gây
           \term{mất thông tin}{catastrophic forgetting}.
   \end{enumerate}

@@ -3,104 +3,110 @@
 % =====================================================================
 
 % ---------------------------------------------------------------------
-\begin{frame}{Chỉ hai lớp của mô hình gắn với một ngôn ngữ cụ thể}
+\begin{frame}{Kiến trúc NeoBERT}
+\vspace{-0.35em}
+\centering
+\includegraphics[width=\linewidth,height=7.05cm,keepaspectratio]{fig-neobert-arch}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{RoPE: mã hóa vị trí bằng phép quay véc-tơ}
+\vspace{0.2em}
+\centering
+\includegraphics[width=0.84\linewidth,height=5.4cm,keepaspectratio]{fig-rope-paper}
+
+\vspace{0.2em}
+{\footnotesize\color{vnCite} Nguồn: \citet{Su2024}}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{Pre-RMSNorm: gradient ổn định hơn, phép tính rẻ hơn}
+\vspace{-0.35em}
 \begin{columns}[T]
-\begin{column}{0.46\textwidth}
-  \lead{Cách Encoder được huấn luyện}
+% ---------------- cột trái: vị trí đặt chuẩn hóa ----------------
+\begin{column}{0.40\textwidth}
+\centering
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{%
+\begin{tikzpicture}[
+  bx/.style={draw=vnNavy,fill=vnLight,rounded corners=2pt,text width=1.75cm,
+             align=center,font=\scriptsize,minimum height=0.5cm,inner sep=2pt},
+  nm/.style={bx,fill=white},
+  pl/.style={draw=vnNavy,circle,inner sep=1.2pt,font=\scriptsize},
+  ar/.style={-{Latex[length=1.4mm]},vnNavy,semithick}]
 
-  Mô hình học bằng \term{mô hình hóa ngôn ngữ có mặt nạ}{Masked Language
-  Modeling}: che ngẫu nhiên một số token rồi bắt mô hình đoán lại token
-  gốc dựa vào ngữ cảnh hai bên \cit{Devlin2019}.
+  % ---- Post-LN ----
+  \node[font=\bfseries\scriptsize,text=vnNavy] at (0,4.55) {Post-LN (BERT)};
+  \node[font=\scriptsize] (a0) at (0,0)     {$x$};
+  \node[bx]               (a1) at (0,1.0)   {Lớp con};
+  \node[pl]               (a2) at (0,2.0)   {$+$};
+  \node[nm]               (a3) at (0,3.05)  {LayerNorm};
+  \node[font=\scriptsize] (a4) at (0,3.95)  {$y$};
+  \draw[ar] (a0)--(a1); \draw[ar] (a1)--(a2);
+  \draw[ar] (a2)--(a3); \draw[ar] (a3)--(a4);
+  \draw[ar] (a0.east) -- ++(1.3,0) |- (a2.east);
+  \node[font=\tiny,text=vnCite,align=center] at (0,-0.75)
+       {chuẩn hóa nằm \emph{trên}\\residual};
 
-  \vspace{0.35em}
-  \textbf{Quan sát then chốt của khóa luận}
-  \begin{itemize}\itemsep2pt
-    \item \emph{Phần thân} Transformer học quy luật ngôn ngữ tổng quát --
-          đây là phần \textbf{tốn kém nhất} khi huấn luyện.
-    \item Chỉ \emph{lớp véc-tơ đầu vào} và \emph{lớp đầu ra} là gắn trực
-          tiếp với bộ từ vựng của một ngôn ngữ.
-  \end{itemize}
-
-  \vspace{0.2em}
-  $\Rightarrow$ Về nguyên tắc, đổi ngôn ngữ chỉ cần thay \hl{hai lớp} này.
+  % ---- Pre-RMSNorm ----
+  \begin{scope}[xshift=3.9cm]
+    \node[font=\bfseries\scriptsize,text=vnNavy] at (0,4.55) {Pre-RMSNorm};
+    \node[font=\scriptsize] (b0) at (0,0)     {$x$};
+    \node[nm]               (b1) at (0,1.0)   {RMSNorm};
+    \node[bx]               (b2) at (0,2.05)  {Lớp con};
+    \node[pl]               (b3) at (0,3.05)  {$+$};
+    \node[font=\scriptsize] (b4) at (0,3.95)  {$y$};
+    \draw[ar] (b0)--(b1); \draw[ar] (b1)--(b2);
+    \draw[ar] (b2)--(b3); \draw[ar] (b3)--(b4);
+    \draw[ar] (b0.east) -- ++(1.3,0) |- (b3.east);
+    \node[font=\tiny,text=vnCite,align=center] at (0,-0.75)
+         {residual \emph{thông suốt}\\từ đầu đến cuối};
+  \end{scope}
+\end{tikzpicture}}
 \end{column}
 
-\begin{column}{0.51\textwidth}
-\centering
-\fitpic{\begin{tikzpicture}[font=\scriptsize,node distance=5.5mm]
-  \node[draw=vnRed,fill=vnRed!10,rounded corners=2pt,minimum width=5.2cm,
-        minimum height=7mm] (emb) {Ma trận véc-tơ đầu vào $E$};
-  \node[draw=vnNavy,fill=vnNavy,text=white,rounded corners=2pt,
-        minimum width=5.2cm,minimum height=13mm,above=of emb] (body)
-        {\begin{tabular}{c}Phần thân Transformer -- 28 lớp\\[1pt]
-     \tiny RoPE $\cdot$ SwiGLU $\cdot$ Pre-RMSNorm\end{tabular}};
- \node[draw=vnRed,fill=vnRed!10,rounded corners=2pt,minimum width=5.2cm,
-    minimum height=7mm,above=of body] (head) {Lớp đầu ra MLM $W_{\mathrm{dec}}$};
+% ---------------- cột phải: hai lý do ----------------
+\begin{column}{0.575\textwidth}
+\small
+\lead{1. Đặt \emph{trước} $\Rightarrow$ gradient không phình ở lớp cuối}
+Chuẩn gradient tại lớp cuối $\|\partial\mathcal{L}/\partial W^{L,2}\|_F$
+khi khởi tạo ($L$ lớp, $d$ chiều):
+\vspace{-0.35em}
+\[\textstyle
+  \underbrace{\mathcal{O}\big(d\sqrt{\ln d}\big)}_{\text{Post-LN}}
+  \qquad\text{so với}\qquad
+  \underbrace{\mathcal{O}\big(d\sqrt{\ln d\,/\,L}\big)}_{\text{Pre-LN}}
+\]
+\vspace{-0.85em}
 
- \draw[-{Latex[length=2mm]},vnSteel,thick] (emb)--(body);
- \draw[-{Latex[length=2mm]},vnSteel,thick] (body)--(head);
+Post-LN chuẩn hóa lại residual ở \emph{mọi} lớp: gradient
+\textbf{không nhỏ đi} khi mạng sâu thêm, buộc phải dùng
+\textit{warm-up} tốc độ học. Pre-LN chia thêm $\sqrt{L}$ nên \hl{28 lớp} của
+NeoBERT huấn luyện ổn định \cit{Xiong2020}
 
- \node[right=2mm of emb,text=vnRed,align=left,font=\tiny] {gắn với\\từ vựng};
- \node[right=2mm of body,text=vnNavy,align=left,font=\tiny] {độc lập\\ngôn ngữ};
- \node[right=2mm of head,text=vnRed,align=left,font=\tiny] {gắn với\\từ vựng};
-\end{tikzpicture}}
-\\[5pt]
-{\footnotesize\color{vnCite} Phần đỏ phải thay khi chuyển sang tiếng Việt;
- phần navy được giữ nguyên}
+\vspace{0.15em}
+\lead{2. Bỏ trung bình $\Rightarrow$ mỗi lớp rẻ hơn}
+\vspace{-0.45em}
+\[\textstyle
+  \underbrace{\tfrac{a_i-\mu}{\sigma}g_i+b_i}_{\text{LayerNorm}}
+  \;\longrightarrow\;
+  \underbrace{\tfrac{a_i}{\mathrm{RMS}(a)}g_i}_{\text{RMSNorm}},\;
+  \mathrm{RMS}(a)=\sqrt{\tfrac{1}{n}\textstyle\sum_i a_i^2}
+\]
+\vspace{-0.5em}
+\begin{flushright}\cit{Zhang2019}\end{flushright}
 \end{column}
 \end{columns}
 \end{frame}
 
 % ---------------------------------------------------------------------
-\begin{frame}{NeoBERT khác BERT ở bốn điểm}
-\vspace{0.3em}
-\small
-\begin{tabular}{@{} L{2.9cm} L{4.9cm} L{5.6cm}@{}}
-  \toprule
-  \rowcolor{vnLight}
-  \color{vnNavy}\bfseries Thành phần &
-  \color{vnNavy}\bfseries BERT &
-  \color{vnNavy}\bfseries NeoBERT\\
-  \midrule
-  Mã hóa vị trí &
-  Bảng véc-tơ vị trí tuyệt đối, cộng vào đầu vào &
-  \textbf{RoPE}: quay véc-tơ theo vị trí, đặt bên trong mỗi lớp
-  \cit{Su2024}\\[3pt]
-  Kích hoạt FFN &
-  GELU, mọi chiều qua cùng một phi tuyến &
-  \textbf{SwiGLU}: thêm nhánh cổng chọn lọc thông tin \cit{Shazeer2020}\\[3pt]
-  Chuẩn hóa &
-  LayerNorm đặt \emph{sau} lớp con &
-  \textbf{Pre-RMSNorm}: chuẩn hóa theo độ lớn, đặt \emph{trước}
-  \cit{Zhang2019}\\[3pt]
-  Hình dạng &
-  12 lớp $\times$ 768 (nông, rộng) &
-  \textbf{28 lớp $\times$ 768} -- sâu mà hẹp \cit{Levine2020}\\
-  \bottomrule
-\end{tabular}
-
-\vspace{0.6em}
-\begin{block}{Vì sao điều này quan trọng với đề tài}
-  Bốn thay đổi trên nằm \emph{toàn bộ} trong phần thân. Chúng làm phần thân
-  mạnh hơn -- và vì thế đáng để giữ lại -- nhưng cũng đặt ra hai ràng buộc
-  cho việc thay lớp từ vựng, trình bày ở slide sau.
-\end{block}
-\end{frame}
-
-% ---------------------------------------------------------------------
-\begin{frame}{Hai đặc điểm của NeoBERT định hình cách chuyển giao}
-\vspace{0.3em}
+\begin{frame}{Ba đặc điểm của NeoBERT định hình cách chuyển giao}
+\vspace{0.4em}
 \begin{columns}[T]
 \begin{column}{0.48\textwidth}
   \lead{1. RoPE -- thuận lợi}
-
-  Điểm chú ý giữa hai token chỉ phụ thuộc \emph{khoảng cách} $m-n$:
-  \vspace{-2pt}
-  \[\textstyle q_m^{\top}k_n = x_m^{\top}W_q^{\top}R_{\Theta,\,n-m}W_k\,x_n\]
-  \vspace{-10pt}
-
-  \begin{itemize}\itemsep1pt
-    \item Thông tin vị trí \textbf{không nằm} trong ma trận véc-tơ.
+  \begin{itemize}\itemsep2pt
+    \item Vị trí được áp \emph{bên trong} mỗi lớp, \textbf{không nằm} trong
+          ma trận véc-tơ.
     \item[$\Rightarrow$] Thay toàn bộ lớp từ vựng tiếng Việt
           \emph{không đụng chạm} cơ chế vị trí.
   \end{itemize}
@@ -108,21 +114,16 @@
 
 \begin{column}{0.48\textwidth}
   \lead{2. Pre-RMSNorm -- ràng buộc}
-
-  Chuẩn hóa chia theo độ lớn véc-tơ:
-  \vspace{-2pt}
-  \[\bar a_i = \frac{a_i}{\mathrm{RMS}(a)}\,g_i\]
-  \vspace{-10pt}
-
-  \begin{itemize}\itemsep1pt
-    \item Lớp véc-tơ đi thẳng vào luồng chính qua kết nối tắt.
-    \item[$\Rightarrow$] Nếu \textbf{độ lớn} véc-tơ mới lệch khỏi thống kê
-          của NeoBERT, sai lệch bị khuếch đại qua 28 lớp.
+  \begin{itemize}\itemsep2pt
+    \item Chuẩn hóa chia theo \emph{độ lớn} véc-tơ; lớp véc-tơ đi thẳng vào
+          luồng chính qua residual.
+    \item[$\Rightarrow$] Nếu độ lớn véc-tơ mới lệch khỏi thống kê NeoBERT,
+          sai lệch bị khuếch đại qua 28 lớp.
   \end{itemize}
 \end{column}
 \end{columns}
 
-\vspace{0.7em}
+\vspace{0.9em}
 \begin{alertblock}{3. Lớp đầu ra không dùng chung trọng số}
   Khác BERT/RoBERTa, đầu MLM của NeoBERT là một ma trận \emph{độc lập} với
   ma trận véc-tơ đầu vào. Vì vậy chuyển sang tiếng Việt phải khởi tạo
@@ -131,51 +132,53 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
-\begin{frame}{Khởi tạo lớp véc-tơ khi đổi ngôn ngữ -- và kỹ thuật SALT}
-\vspace{0.2em}
-\begin{columns}[T]
-\begin{column}{0.47\textwidth}
-  \lead{Khởi tạo ngẫu nhiên là lựa chọn tồi}
-
-  Phần thân buộc phải học lại từ tín hiệu đầu vào vô nghĩa, dễ phá vỡ
-  biểu diễn đã có \cit{deVries2021}.
-
-  \vspace{0.4em}
-  \textbf{Hướng khắc phục}: khởi tạo token mới bằng \emph{thông tin ngữ
-  nghĩa} đã biết -- WECHSEL \cit{Minixhofer2022}, FOCUS \cit{Dobler2023},
-  OFA \cit{Liu2024}.
-
-  \vspace{0.4em}
-  \textbf{SALT} \cit{Lee2025} đi xa hơn: tái sử dụng trực tiếp không gian
-  véc-tơ của một mô hình \emph{đã tiền huấn luyện} ở ngôn ngữ đích, qua
-  các ánh xạ tuyến tính \emph{cục bộ} theo từng token.
-\end{column}
-
-\begin{column}{0.50\textwidth}
+\begin{frame}{Đổi ngôn ngữ: khởi tạo lớp véc-tơ thế nào?}
+\vspace{0.4em}
 \centering
-\fitpic{\begin{tikzpicture}[font=\scriptsize,node distance=4mm]
-  \node[draw=vnSteel,fill=vnSteel!10,rounded corners=2pt,
-        minimum width=2.5cm,minimum height=8mm] (src)
-        {\begin{tabular}{c}Không gian\\véc-tơ tiếng Việt\end{tabular}};
- \node[draw=vnNavy,fill=vnLight,rounded corners=2pt,
-    minimum width=2.5cm,minimum height=8mm,right=16mm of src] (tgt)
-    {\begin{tabular}{c}Không gian\\NeoBERT\end{tabular}};
- \draw[-{Latex[length=2mm]},vnRed,very thick] (src)--(tgt)
-    node[midway,above,text=vnRed,font=\tiny]{$X_t$}
-        node[midway,below,text=vnRed,font=\tiny]{cục bộ};
+% Diagram is narrower than the text block, so \fitpic would leave it small.
+% Force it up to 0.86\linewidth instead.
+\resizebox{0.93\linewidth}{!}{\begin{tikzpicture}[font=\scriptsize,
+  b/.style={draw=vnNavy,rounded corners=2pt,text width=2.6cm,
+            minimum height=16mm,align=center,inner sep=3pt},
+  ar/.style={-{Latex[length=2mm]},vnSteel,thick}]
 
-  \node[below=7mm of src,text=vnNavy,font=\tiny,align=center] (a1)
-        {điểm neo\\ đã biết cả hai phía};
-  \draw[dashed,vnCite] (a1)--(src);
-  \draw[dashed,vnCite] (a1) to[bend right=12] (tgt);
+  \node[b,fill=vnRed!10,draw=vnRed] (rnd)
+       {\textbf{Ngẫu nhiên}\\[-1pt]\tiny tín hiệu vô nghĩa};
+  \node[b,fill=vnLight,right=9mm of rnd] (sem)
+       {\textbf{Theo ngữ nghĩa}\\[-1pt]\tiny WECHSEL, FOCUS, OFA};
+  \node[b,fill=vnNavy,text=white,draw=vnNavy,right=9mm of sem] (salt)
+       {\textbf{SALT}\\[-1pt]\tiny tái sử dụng không gian};
+
+  \draw[ar] (rnd)--(sem);
+  \draw[ar] (sem)--(salt);
+
+  \node[below=3mm of rnd,text=vnRed,font=\tiny,align=center]
+       {phá vỡ biểu diễn\\ đã có};
+  \node[below=3mm of sem,text=vnCite,font=\tiny,align=center]
+       {mượn \emph{véc-tơ tĩnh}\\ làm cầu nối};
+  \node[below=3mm of salt,text=vnCite,font=\tiny,align=center]
+       {mượn \emph{mô hình}\\ \emph{đã tiền huấn luyện}};
 \end{tikzpicture}}
 
-\vspace{4pt}
-\begin{block}{Hạn chế với cặp Anh--Việt}
-  \small SALT gốc chỉ lấy điểm neo là các token \emph{trùng mặt chữ}.
-  Anh và Việt khác nhau lớn về hình thái $\Rightarrow$ rất ít điểm neo,
-  độ phủ ngữ nghĩa hẹp.
-\end{block}
+\vspace{1.0em}
+\begin{columns}[T]
+\begin{column}{0.94\textwidth}
+  \small
+  Khởi tạo ngẫu nhiên buộc phần thân học lại từ tín hiệu vô nghĩa
+  \cit{deVries2021}. Các phương pháp theo ngữ nghĩa dùng véc-tơ tĩnh để bắc
+  cầu; \textbf{SALT} đi xa hơn -- lấy thẳng không gian véc-tơ của một mô hình
+  \hl{đã tiền huấn luyện} ở ngôn ngữ đích.
 \end{column}
 \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------
+\begin{frame}{SALT: tái sử dụng không gian véc-tơ của mô hình ngôn ngữ đích}
+\vfill
+\centering
+\includegraphics[width=\linewidth,height=5.9cm,keepaspectratio]{fig-salt-paper}
+
+\vspace{0.4em}
+{\footnotesize\color{vnCite} Nguồn: \citet{Lee2025}}
+\vfill
 \end{frame}

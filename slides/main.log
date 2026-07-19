@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.7.14)  18 JUL 2026 22:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2026.7.14)  20 JUL 2026 05:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1235,7 +1235,7 @@ Dictionary: translator-theorem-dictionary, Language: English
 <figures/logo-hcmus.png, id=69, 602.25pt x 493.845pt>
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 72.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 78.
 (pdftex.def)             Requested size: 38.41139pt x 31.49068pt.
  [1
 
@@ -1243,11 +1243,11 @@ Package pdftex.def Info: figures/logo-hcmus.png  used on input line 72.
  (./main.toc)
 
 LaTeX Font Warning: Font shape `T5/cmss/m/it' in size <9> not available
-(Font)              Font shape `T5/cmss/m/sl' tried instead on input line 89.
+(Font)              Font shape `T5/cmss/m/sl' tried instead on input line 95.
 
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 89.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 95.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
 [2
 
@@ -1291,7 +1291,7 @@ Package pdftex.def Info: figures/logo-hcmus.png  used on input line 125.
 ]
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 163.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 164.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [5
 
@@ -1303,244 +1303,280 @@ Package pdftex.def Info: figures/logo-hcmus.png  used on input line 2.
  [6
 
 ]
+<figures/fig-neobert-arch.png, id=158, 1285.80376pt x 879.285pt>
+File: figures/fig-neobert-arch.png Graphic file (type png)
+<use figures/fig-neobert-arch.png>
+Package pdftex.def Info: figures/fig-neobert-arch.png  used on input line 10.
+(pdftex.def)             Requested size: 293.31541pt x 200.58102pt.
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 52.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 10.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [7
 
-]
+ <./figures/fig-neobert-arch.png>]
+<figures/fig-rope-paper.pdf, id=167, 821.0675pt x 459.7175pt>
+File: figures/fig-rope-paper.pdf Graphic file (type pdf)
+<use figures/fig-rope-paper.pdf>
+Package pdftex.def Info: figures/fig-rope-paper.pdf  used on input line 20.
+(pdftex.def)             Requested size: 274.41096pt x 153.6433pt.
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 88.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 20.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [8
 
-]
+ <./figures/fig-rope-paper.pdf>]
+
+LaTeX Font Warning: Font shape `T5/cmss/m/it' in size <5> not available
+(Font)              Font shape `T5/cmss/m/sl' tried instead on input line 99.
+
+
+LaTeX Font Warning: Font shape `T5/cmss/bx/it' undefined
+(Font)              using `T5/cmss/bx/n' instead on input line 99.
+
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 131.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 99.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
-
-Overfull \vbox (3.07265pt too high) detected at line 131
- []
-
 [9
 
 ]
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 181.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 132.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [10
 
-]) (./sections/03-phuongphap.tex (./main.toc)
+]
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 2.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 173.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [11
 
 ]
+
+pdfTeX warning: pdflatex (file ./figures/fig-salt-paper.pdf): PDF inclusion: fo
+und PDF version <1.7>, but at most version <1.5> allowed
+<figures/fig-salt-paper.pdf, id=468, 827.09pt x 278.03876pt>
+File: figures/fig-salt-paper.pdf Graphic file (type pdf)
+<use figures/fig-salt-paper.pdf>
+Package pdftex.def Info: figures/fig-salt-paper.pdf  used on input line 184.
+(pdftex.def)             Requested size: 415.41179pt x 139.64693pt.
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 57.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 184.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
- [12
+[12
 
-]
-
-LaTeX Font Warning: Font shape `T5/cmss/b/n' undefined
-(Font)              using `T5/cmss/m/n' instead on input line 106.
-
+ <./figures/fig-salt-paper.pdf>]) (./sections/03-phuongphap.tex (./main.toc)
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 106.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 2.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
 [13
 
 ]
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 159.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 64.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [14
 
 ]
+
+LaTeX Font Warning: Font shape `T5/cmss/b/n' undefined
+(Font)              using `T5/cmss/m/n' instead on input line 115.
+
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 203.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 115.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
- [15
+[15
 
 ]
 
 LaTeX Font Warning: Font shape `T5/cmss/m/it' in size <8> not available
-(Font)              Font shape `T5/cmss/m/sl' tried instead on input line 253.
-
-
-LaTeX Font Warning: Font shape `T5/cmss/bx/it' undefined
-(Font)              using `T5/cmss/bx/n' instead on input line 253.
+(Font)              Font shape `T5/cmss/m/sl' tried instead on input line 172.
 
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 253.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 172.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
 [16
 
 ]
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 303.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 233.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [17
 
 ]
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 354.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 283.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [18
 
 ]
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 412.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 333.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [19
 
-]) (./sections/04-thucnghiem.tex (./main.toc)
+]
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 2.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 381.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [20
 
 ]
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 61.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 439.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [21
 
-]
+]) (./sections/04-thucnghiem.tex (./main.toc)
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 106.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 2.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
 
 [22
 
 ]
-<figures/fig-pca-salt.png, id=358, 1192.455pt x 487.8225pt>
-File: figures/fig-pca-salt.png Graphic file (type png)
-<use figures/fig-pca-salt.png>
-Package pdftex.def Info: figures/fig-pca-salt.png  used on input line 139.
-(pdftex.def)             Requested size: 249.24876pt x 101.96191pt.
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 139.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 53.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [23
 
- <./figures/fig-pca-salt.png (PNG copy)>]
-<figures/fig-gamma-loss.png, id=365, 2258.4375pt x 1264.725pt>
-File: figures/fig-gamma-loss.png Graphic file (type png)
-<use figures/fig-gamma-loss.png>
-Package pdftex.def Info: figures/fig-gamma-loss.png  used on input line 179.
-(pdftex.def)             Requested size: 228.47697pt x 127.94656pt.
+]
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 179.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 95.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [24
 
- <./figures/fig-gamma-loss.png (PNG copy)>]
-<figures/fig-init-compare.png, id=375, 3462.9375pt x 1174.3875pt>
-File: figures/fig-init-compare.png Graphic file (type png)
-<use figures/fig-init-compare.png>
-Package pdftex.def Info: figures/fig-init-compare.png  used on input line 207.
-(pdftex.def)             Requested size: 324.01959pt x 109.88351pt.
+]
+<figures/fig-pca-salt.png, id=659, 1192.455pt x 487.8225pt>
+File: figures/fig-pca-salt.png Graphic file (type png)
+<use figures/fig-pca-salt.png>
+Package pdftex.def Info: figures/fig-pca-salt.png  used on input line 120.
+(pdftex.def)             Requested size: 351.22531pt x 143.68307pt.
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 207.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 120.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [25
 
- <./figures/fig-init-compare.png (PNG copy)>]
-<figures/fig-cpt-loss.png, id=385, 3040.35875pt x 1202.4925pt>
-File: figures/fig-cpt-loss.png Graphic file (type png)
-<use figures/fig-cpt-loss.png>
-Package pdftex.def Info: figures/fig-cpt-loss.png  used on input line 237.
-(pdftex.def)             Requested size: 240.93878pt x 95.28394pt.
+ <./figures/fig-pca-salt.png (PNG copy)>]
+<figures/fig-gamma-loss.png, id=667, 2258.4375pt x 1264.725pt>
+File: figures/fig-gamma-loss.png Graphic file (type png)
+<use figures/fig-gamma-loss.png>
+Package pdftex.def Info: figures/fig-gamma-loss.png  used on input line 161.
+(pdftex.def)             Requested size: 228.47697pt x 127.94656pt.
+
+Overfull \hbox (1.85086pt too wide) in paragraph at lines 161--161
+[][]  
+ []
+
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 237.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 161.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
- [26
+[26
+
+ <./figures/fig-gamma-loss.png (PNG copy)>]
+<figures/fig-init-compare.png, id=676, 3462.9375pt x 1174.3875pt>
+File: figures/fig-init-compare.png Graphic file (type png)
+<use figures/fig-init-compare.png>
+Package pdftex.def Info: figures/fig-init-compare.png  used on input line 169.
+(pdftex.def)             Requested size: 373.84373pt x 126.78178pt.
+File: figures/logo-hcmus.png Graphic file (type png)
+<use figures/logo-hcmus.png>
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 169.
+(pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
+ [27
+
+ <./figures/fig-init-compare.png (PNG copy)>]
+<figures/fig-cpt-loss.png, id=684, 3040.35875pt x 1202.4925pt>
+File: figures/fig-cpt-loss.png Graphic file (type png)
+<use figures/fig-cpt-loss.png>
+Package pdftex.def Info: figures/fig-cpt-loss.png  used on input line 199.
+(pdftex.def)             Requested size: 307.40598pt x 121.57738pt.
+File: figures/logo-hcmus.png Graphic file (type png)
+<use figures/logo-hcmus.png>
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 199.
+(pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
+ [28
 
  <./figures/fig-cpt-loss.png (PNG copy)>]
-<figures/fig-f1-tokens.png, id=392, 2469.225pt x 1385.175pt>
+<figures/fig-f1-tokens.png, id=692, 2469.225pt x 1385.175pt>
 File: figures/fig-f1-tokens.png Graphic file (type png)
 <use figures/fig-f1-tokens.png>
-Package pdftex.def Info: figures/fig-f1-tokens.png  used on input line 276.
+Package pdftex.def Info: figures/fig-f1-tokens.png  used on input line 238.
 (pdftex.def)             Requested size: 228.47697pt x 128.16895pt.
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 276.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 238.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
- [27
+ [29
 
  <./figures/fig-f1-tokens.png (PNG copy)>]
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 325.
-(pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
-
-[28
-
-]
-File: figures/logo-hcmus.png Graphic file (type png)
-<use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 375.
-(pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
- [29
-
-]
-<figures/fig-pppl-ctx.png, id=414, 2005.4925pt x 745.78625pt>
-File: figures/fig-pppl-ctx.png Graphic file (type png)
-<use figures/fig-pppl-ctx.png>
-Package pdftex.def Info: figures/fig-pppl-ctx.png  used on input line 407.
-(pdftex.def)             Requested size: 236.78696pt x 88.04526pt.
-File: figures/logo-hcmus.png Graphic file (type png)
-<use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 407.
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 289.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [30
 
- <./figures/fig-pppl-ctx.png (PNG copy)>])
-(./sections/05-ketluan.tex (./main.toc)
+]
+File: figures/logo-hcmus.png Graphic file (type png)
+<use figures/logo-hcmus.png>
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 339.
+(pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
+ [31
+
+]
+<figures/fig-pppl-ctx.png, id=715, 2005.4925pt x 745.78625pt>
+File: figures/fig-pppl-ctx.png Graphic file (type png)
+<use figures/fig-pppl-ctx.png>
+Package pdftex.def Info: figures/fig-pppl-ctx.png  used on input line 362.
+(pdftex.def)             Requested size: 371.0715pt x 137.99106pt.
+File: figures/logo-hcmus.png Graphic file (type png)
+<use figures/logo-hcmus.png>
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 362.
+(pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
+ [32
+
+ <./figures/fig-pppl-ctx.png (PNG copy)>]) (./sections/05-ketluan.tex (./main.t
+oc)
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
 Package pdftex.def Info: figures/logo-hcmus.png  used on input line 2.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
- [31
+ [33
 
 ]
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
 Package pdftex.def Info: figures/logo-hcmus.png  used on input line 39.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
- [32
+ [34
 
 ]
 File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
 Package pdftex.def Info: figures/logo-hcmus.png  used on input line 74.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
- [33
+ [35
 
-] [34
+] [36
 
 ])
 (./sections/06-tailieu.tex (./main.bbl
@@ -1557,22 +1593,22 @@ File: figures/logo-hcmus.png Graphic file (type png)
 <use figures/logo-hcmus.png>
 Package pdftex.def Info: figures/logo-hcmus.png  used on input line 11.
 (pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
- [35
-
-]
-File: figures/logo-hcmus.png Graphic file (type png)
-<use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 11.
-(pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
- [36
-
-
-]
-File: figures/logo-hcmus.png Graphic file (type png)
-<use figures/logo-hcmus.png>
-Package pdftex.def Info: figures/logo-hcmus.png  used on input line 11.
-(pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
  [37
+
+]
+File: figures/logo-hcmus.png Graphic file (type png)
+<use figures/logo-hcmus.png>
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 11.
+(pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
+ [38
+
+
+]
+File: figures/logo-hcmus.png Graphic file (type png)
+<use figures/logo-hcmus.png>
+Package pdftex.def Info: figures/logo-hcmus.png  used on input line 11.
+(pdftex.def)             Requested size: 27.75253pt x 22.76228pt.
+ [39
 
 
 ])
@@ -1595,48 +1631,50 @@ L3 programming layer <2024-01-22>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 0054383EBC295DC5E2C4543CA6649D33;1977.
+(rerunfilecheck)             Checksum: 33D56231DCE12201890B57999EACBF19;1977.
  ) 
 Here is how much of TeX's memory you used:
- 29078 strings out of 474222
- 576051 string characters out of 5748733
+ 29245 strings out of 474222
+ 579152 string characters out of 5748733
  1948975 words of memory out of 5000000
- 50598 multiletter control sequences out of 15000+600000
- 595534 words of font info for 105 fonts, out of 8000000 for 9000
+ 50764 multiletter control sequences out of 15000+600000
+ 593603 words of font info for 98 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 128i,18n,123p,379b,1085s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 128i,16n,123p,379b,1165s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-ss9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi9.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/v
-ntex/vnr/vnr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/vntex/vnr/vnr5.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/vntex/vnr/vnr6.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/vntex/vnr/vnr7.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/vntex/vnr/vnss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/vnte
-x/vnr/vnss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/vntex/vnr/vnss9.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/vntex/vnr/vnssbx10.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/vntex/vnr/vnssi10.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/vntex/vnr/vnssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/vntex/vnr/vnssi9.pfb>
-Output written on main.pdf (37 pages, 1442902 bytes).
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmss9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi
+10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi9.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmsy9.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/vnte
+x/vnr/vnr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/vntex/vnr/vnr5.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/vntex/vnr/vnr6.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/vntex/vnr/vnr7.pfb></usr/share/texlive/texmf-dist/font
+s/type1/vntex/vnr/vnr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/vntex/vnr
+/vnss10.pfb></usr/share/texlive/texmf-dist/fonts/type1/vntex/vnr/vnss8.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/vntex/vnr/vnss9.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/vntex/vnr/vnssbx10.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/vntex/vnr/vnssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/vnte
+x/vnr/vnssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/vntex/vnr/vnssi9.pf
+b>
+Output written on main.pdf (39 pages, 1785859 bytes).
 PDF statistics:
- 639 PDF objects out of 1000 (max. 8388607)
- 484 compressed objects within 5 object streams
- 117 named destinations out of 1000 (max. 500000)
- 202 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 955 PDF objects out of 1000 (max. 8388607)
+ 727 compressed objects within 8 object streams
+ 122 named destinations out of 1000 (max. 500000)
+ 217 words of extra memory for PDF output out of 10000 (max. 10000000)
 

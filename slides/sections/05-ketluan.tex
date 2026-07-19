@@ -47,12 +47,12 @@
   \begin{itemize}\itemsep2pt
     \item \textbf{Ngân sách huấn luyện}: 5 tỷ token vẫn nhỏ; chưa vượt
           PhoBERT-base-v2 ở nhóm phân loại câu ngắn.
-    \item \textbf{Phạm vi đánh giá}: chưa khảo sát nhận dạng thực thể có tên;
-          Retrieval--Reranking mới chạy một lần nên chưa ước lượng phương sai.
+    \item \textbf{Phạm vi đánh giá}: chưa khảo sát nhận dạng thực thể có tên.
     \item \textbf{Ngữ cảnh dài}: mới kiểm chứng bằng độ đo nội tại
           (pseudo-perplexity), chưa có tác vụ ứng dụng.
-    \item \textbf{Tokenizer}: ảnh hưởng của việc không tách từ chưa được
-          phân tích riêng.
+    \item \textbf{Tokenizer}: kế thừa ViDeBERTa, chạy ở mức âm tiết trên văn
+          bản thô -- \emph{không tách từ} như PhoBERT; ảnh hưởng của khác
+          biệt này chưa được phân tích riêng.
   \end{itemize}
 \end{column}
 

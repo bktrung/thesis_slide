@@ -4,50 +4,57 @@
 \subsection{Tổng quan}
 
 % ---------------------------------------------------------------------
-\begin{frame}{Quy trình xây dựng ViNeoBERT: ba giai đoạn}
-\vspace{0.4em}
+\begin{frame}{Quy trình xây dựng ViNeoBERT}
+\vspace{0.6em}
 \centering
 % Shrink only if the diagram would otherwise run past the text block.
 \fitpic{\begin{tikzpicture}[font=\scriptsize,
   % text width (not just minimum width) so long labels wrap instead of
   % widening the node and colliding with its neighbour
   stage/.style={draw=vnNavy,fill=vnLight,rounded corners=2pt,
-                text width=2.2cm,minimum height=11mm,align=center,inner sep=3pt},
+                text width=2.35cm,minimum height=14mm,align=center,inner sep=3pt},
   src/.style={draw=vnSteel,fill=white,rounded corners=2pt,
-              text width=1.85cm,minimum height=8mm,align=center,inner sep=3pt}]
+              text width=1.95cm,minimum height=9mm,align=center,inner sep=3pt},
+  ar/.style={-{Latex[length=2mm]},vnSteel,thick}]
 
   \node[src] (neo) {NeoBERT\\[-1pt]\tiny kiến trúc + không gian đích};
-  \node[src,below=7mm of neo] (vide) {ViDeBERTa\\[-1pt]\tiny mô hình nguồn véc-tơ};
+  \node[src,below=9mm of neo] (vide) {ViDeBERTa\\[-1pt]\tiny mô hình nguồn véc-tơ};
 
-  \node[stage,right=7mm of $(neo)!0.5!(vide)$] (s1)
-       {\textbf{Giai đoạn 1}\\ Khởi tạo SALT\\[-1pt]\tiny thân đóng băng};
-  \node[stage,right=4mm of s1] (s2)
-       {\textbf{Giai đoạn 2}\\ Căn chỉnh\\[-1pt]\tiny thân đóng băng};
-  \node[stage,right=4mm of s2] (s3)
-       {\textbf{Giai đoạn 3}\\ CPT theo lịch WSD\\[-1pt]\tiny toàn bộ tham số};
+  % Neo đối với *cạnh phải* của hai hộp nguồn. Lấy mốc là tâm ($(neo)!0.5!(vide)$)
+  % thì hộp giai đoạn 1 thụt sang trái nửa bề rộng hộp nguồn và đè lên chúng,
+  % khiến hai mũi tên phải quặt ngược lại.
+  \node[stage,anchor=west] (s1) at ([xshift=9mm]$(neo.east)!0.5!(vide.east)$)
+       {\textbf{Giai đoạn 1}\\ Khởi tạo SALT};
+  \node[stage,right=5mm of s1] (s2)
+       {\textbf{Giai đoạn 2}\\ Căn chỉnh};
+  \node[stage,right=5mm of s2] (s3)
+       {\textbf{Giai đoạn 3}\\ Tiếp tục tiền huấn luyện};
   \node[src,right=5mm of s3,fill=vnNavy,text=white,draw=vnNavy] (out)
        {\textbf{ViNeoBERT}};
 
-  \draw[-{Latex[length=2mm]},vnSteel,thick] (neo.east)  -- (s1.west|-neo)  -- (s1.west);
-  \draw[-{Latex[length=2mm]},vnSteel,thick] (vide.east) -- (s1.west|-vide) -- (s1.west);
-  \draw[-{Latex[length=2mm]},vnSteel,thick] (s1)--(s2);
-  \draw[-{Latex[length=2mm]},vnSteel,thick] (s2)--(s3);
-  \draw[-{Latex[length=2mm]},vnSteel,thick] (s3)--(out);
+  % Hai nguồn gộp tại một điểm rẽ rồi mới vào giai đoạn 1
+  \coordinate (j) at ([xshift=4.5mm]$(neo.east)!0.5!(vide.east)$);
+  \draw[vnSteel,thick] (neo.east)  -| (j);
+  \draw[vnSteel,thick] (vide.east) -| (j);
+  \draw[ar] (j) -- (s1.west);
+  \draw[ar] (s1)--(s2);
+  \draw[ar] (s2)--(s3);
+  \draw[ar] (s3)--(out);
 
   \node[below=2mm of s1,text=vnCite,font=\tiny] {không huấn luyện};
   \node[below=2mm of s2,text=vnCite,font=\tiny] {$\sim$20 triệu token};
   \node[below=2mm of s3,text=vnCite,font=\tiny] {$\sim$5 tỷ token};
 \end{tikzpicture}}
 
-\vspace{0.8em}
+\vspace{1.1em}
 \begin{columns}[T]
 \begin{column}{0.95\textwidth}
 \begin{alertblock}{Ba cải tiến của khóa luận so với SALT gốc}
   \small
   \begin{enumerate}\itemsep0pt
-    \item \textbf{Mở rộng tập điểm neo} bằng các cặp dịch Anh--Việt khai thác tự động.
+    \item \textbf{Mở rộng tập điểm neo} bằng các cặp dịch Anh--Việt.
     \item \textbf{Khởi tạo riêng lớp đầu ra}, kèm hệ số điều chỉnh theo tần suất
-          token và hệ số tỉ lệ $\gamma$.
+          token và thu nhỏ trọng số đầu ra.
     \item \textbf{Bổ sung giai đoạn căn chỉnh} với phần thân đóng băng trước khi
           huấn luyện toàn bộ.
   \end{enumerate}
@@ -79,10 +86,6 @@
   \end{tabular}
   \vspace{3pt}\\
   {\footnotesize\color{vnCite} So sánh theo \citet{Nguyen2020} và \citet{Tran2023}}
-
-  \vspace{0.7em}
-  {\footnotesize\color{vnCite} Lưu ý: SALT gốc dùng chính PhoBERT làm mô hình
-   nguồn; khóa luận chủ đích đổi sang ViDeBERTa.}
 \end{column}
 
 \begin{column}{0.42\textwidth}
@@ -94,8 +97,14 @@
     \item Học trên dữ liệu tiếng Việt lớn hơn nhiều $\Rightarrow$ không gian
           véc-tơ mã hóa ngữ nghĩa chính xác hơn.
   \end{itemize}
+\end{column}
+\end{columns}
 
-  \vspace{0.4em}
+% Khối này trước nằm trong cột phải, làm hai bên lệch hẳn nhau.
+% Đưa xuống dưới, trải hết bề ngang.
+\vspace{0.7em}
+\begin{columns}[T]
+\begin{column}{0.95\textwidth}
   \begin{block}{Giảm kích thước từ vựng}
     \small $128.000 \rightarrow \mathbf{30.522}$ token, giữ token đặc biệt và
     chọn theo điểm log-xác suất cao nhất -- để ViNeoBERT có số tham số ngang
@@ -114,20 +123,24 @@
 \begin{column}{0.44\textwidth}
   \lead{Điểm neo là gì?}
 
-  Cặp token \emph{tương ứng ngữ nghĩa} giữa từ vựng tiếng Việt và tiếng Anh --
-  mỗi cặp cho ta một điểm \emph{đã biết} của ánh xạ giữa hai không gian.
+  Cặp token \emph{đồng nghĩa} giữa hai từ vựng -- một điểm \emph{đã biết}
+  của ánh xạ.
 
-  \vspace{0.4em}
+  \vspace{0.15em}
   \textbf{Hai vai trò}
   \begin{itemize}\itemsep1pt
-    \item Token neo được khởi tạo bằng cách \emph{sao chép} véc-tơ NeoBERT.
-    \item Các cặp neo làm \emph{tập giám sát} để học ánh xạ cho những token
-          còn lại.
+    \item \textbf{Token neo}: khởi tạo bằng cách \emph{sao chép}
+          véc-tơ NeoBERT tương ứng.
+    \item \textbf{Các cặp neo}: làm \emph{dữ liệu mẫu} để học phép ánh xạ
+          -- dùng cho các token \emph{không phải điểm neo}.
   \end{itemize}
 
   \vspace{0.3em}
-  $\Rightarrow$ Số lượng và chất lượng điểm neo \hl{quyết định} chất lượng
-  khởi tạo.
+  $\Rightarrow$ Số lượng điểm neo \hl{quyết định} chất lượng khởi tạo.
+
+  \vspace{0.2em}
+  {\footnotesize\color{vnCite} SALT gốc chỉ lấy điểm neo \emph{trùng mặt chữ}
+  nên rất ít cho cặp Anh--Việt -- khóa luận mở rộng bằng \textbf{cặp dịch}.}
 \end{column}
 
 \begin{column}{0.53\textwidth}
@@ -160,44 +173,61 @@
 
 % ---------------------------------------------------------------------
 \begin{frame}{Mở rộng tập điểm neo bằng cặp dịch Anh--Việt}
-\framesubtitle{Đóng góp chính ở bước khởi tạo}
 \vspace{0.2em}
+\centering
+\resizebox{0.82\linewidth}{!}{\begin{tikzpicture}[font=\scriptsize,
+  st/.style={draw=vnNavy,fill=vnLight,rounded corners=2pt,text width=3.15cm,
+             minimum height=10mm,align=center,inner sep=3pt},
+  io/.style={draw=vnSteel,fill=white,rounded corners=2pt,text width=2.2cm,
+             minimum height=10mm,align=center,inner sep=3pt},
+  ar/.style={-{Latex[length=2mm]},vnSteel,thick}]
+
+  \node[io] (voc) {Từ vựng\\tiếng Việt\\[-1pt]\tiny 30.522 token};
+  \node[st,right=7mm of voc,fill=vnRed!8,draw=vnRed] (flt)
+       {\textbf{Lọc từ hợp lệ}\\[-1pt]\tiny loại \textit{f, j, w, z};
+        một cụm nguyên âm; \textit{k/gh/ngh}};
+
+  % Ba tầng khai thác, xếp chồng. Đặt tầng 2 trước rồi neo tầng 1/3 *theo
+  % tầng 2* -- nếu đo khoảng cách từ (flt.east) thì các hộp cao hơn
+  % minimum height sẽ chồng lên nhau.
+  \node[st,right=7mm of flt] (t2)
+       {\textbf{Tầng 2} -- từ ghép, một chiều\\[-1pt]
+        \tiny bệnh viện $\to$ \textit{hospital}};
+  \node[st,above=4mm of t2] (t1)
+       {\textbf{Tầng 1} -- dịch ngược trùng\\[-1pt]
+        \tiny sách $\to$ \textit{book} $\to$ sách};
+  \node[st,below=4mm of t2] (t3)
+       {\textbf{Tầng 3} -- từ đơn, lọc tay\\[-1pt]
+        \tiny vét nốt độ phủ};
+
+  \node[io,right=7mm of t2,fill=vnNavy,text=white,draw=vnNavy] (out)
+       {\textbf{Tập điểm neo}};
+
+  \draw[ar] (voc)--(flt);
+  \coordinate (j) at ([xshift=3.5mm]flt.east);
+  \draw[vnSteel,thick] (flt.east)--(j);
+  \draw[ar] (j) |- (t1.west);
+  \draw[ar] (j) -- (t2.west);
+  \draw[ar] (j) |- (t3.west);
+
+  \coordinate (k) at ([xshift=3.5mm]t2.east);
+  \draw[vnSteel,thick] (t1.east) -| (k);
+  \draw[vnSteel,thick] (t2.east) -- (k);
+  \draw[vnSteel,thick] (t3.east) -| (k);
+  \draw[ar] (k) -- (out.west);
+
+  \node[above=1.5mm of t1,text=vnCite,font=\tiny] {ưu tiên độ chính xác};
+  \node[below=1.5mm of t3,text=vnCite,font=\tiny] {ưu tiên độ phủ};
+\end{tikzpicture}}
+
+\vspace{0.4em}
 \begin{columns}[T]
-\begin{column}{0.55\textwidth}
-  \small
-  Trước khi khai thác: lọc để chỉ giữ \textbf{từ tiếng Việt hợp lệ}
-  (loại \textit{f, j, w, z}; đúng một cụm nguyên âm; tuân thủ quy tắc
-  chính tả \textit{k/gh/ngh}, \textit{q}+\textit{u}\,\dots).
-
-  \vspace{0.5em}
-  \begin{tabular}{@{} L{1.0cm} L{3.3cm} L{2.85cm}@{}}
-    \toprule
-    \rowcolor{vnLight}
-    \color{vnNavy}\bfseries Tầng &
-    \color{vnNavy}\bfseries Cách khai thác &
-    \color{vnNavy}\bfseries Ví dụ\\
-    \midrule
-    1 & Dịch ngược phải trùng từ gốc & sách $\to$ \textit{book} $\to$ sách\\[2pt]
-    2 & Từ ghép, dịch một chiều      & bệnh viện $\to$ \textit{hospital}\\[2pt]
-    3 & Từ đơn còn lại, lọc thủ công & bổ sung độ phủ\\
-    \bottomrule
-  \end{tabular}
-\end{column}
-
-\begin{column}{0.43\textwidth}
-  \begin{block}{Vì sao dịch ngược lọc được từ đa nghĩa}
+\begin{column}{0.94\textwidth}
+  \begin{block}{Vì sao ràng buộc dịch ngược lọc được từ đa nghĩa}
     \small Một từ đa nghĩa thường \emph{không} dịch ngược về chính nó, vì bản
-    dịch trung gian ứng với một nghĩa khác. Ràng buộc dịch ngược trùng khớp
-    do đó tự động giữ lại các cặp tương ứng một--một đáng tin cậy.
+    dịch trung gian ứng với một nghĩa khác $\Rightarrow$ ràng buộc này tự động
+    giữ lại các cặp tương ứng \hl{một--một} đáng tin cậy.
   \end{block}
-
-  \vspace{0.3em}
-  \textbf{Đánh đổi có chủ đích}
-  \begin{itemize}\itemsep1pt
-    \item Tầng 1 -- ưu tiên \emph{độ chính xác}.
-    \item Tầng 2 -- tăng \emph{số lượng}; từ ghép ít đa nghĩa hơn từ đơn.
-    \item Tầng 3 -- vét nốt \emph{độ phủ}.
-  \end{itemize}
 \end{column}
 \end{columns}
 \end{frame}
@@ -236,7 +266,7 @@
   \begin{block}{Vì sao \emph{cục bộ} chứ không phải một ánh xạ chung}
     \small Hai không gian được huấn luyện độc lập nên \emph{không đẳng cấu}
     \cit{Ormazabal2019} và có tính bất đẳng hướng \cit{Ethayarajh2019}.
-    Một ánh xạ tuyến tính duy nhất cho cả từ vựng là không đủ; mỗi token
+    Một ánh xạ tuyến tính duy nhất là không đủ; mỗi token
     được chiếu dựa trên chính các điểm neo lân cận nó.
   \end{block}
 
@@ -294,7 +324,7 @@
 \end{tikzpicture}}
 
 \vspace{0.5em}
-\begin{alertblock}{Kết quả sớm}
+\begin{alertblock}{Kết quả}
   \small Khởi tạo riêng hai ma trận đạt \hl{67,52} điểm F1, so với
   \textbf{54,09} khi dùng chung trọng số.
 \end{alertblock}
@@ -303,52 +333,49 @@
 \end{frame}
 
 % ---------------------------------------------------------------------
-\begin{frame}{Ba bước tinh chỉnh sau khi chiếu}
-\vspace{0.4em}
-\begin{columns}[T]
-\begin{column}{0.315\textwidth}
-  \begin{block}{1. Hiệu chỉnh độ lớn}
-    \small
-    \[ e_t \leftarrow e_t\cdot\frac{\mu_{\mathrm{neo}}}{\|e_t\|} \]
-    Đưa mỗi véc-tơ về \emph{độ lớn trung bình} của NeoBERT, giữ nguyên hướng.
+% [c] ghi đè kiểu canh trên toàn cục -- nội dung slide này ngắn nên canh
+% giữa theo chiều dọc, tránh dồn hết lên trên và trống đáy.
+\begin{frame}[c]{Ba bước tinh chỉnh sau khi chiếu}
+\centering
+\resizebox{0.98\linewidth}{!}{\begin{tikzpicture}[font=\scriptsize,
+  st/.style={draw=vnNavy,fill=vnLight,rounded corners=2pt,text width=3.0cm,
+             minimum height=21mm,align=center,inner sep=4pt},
+  io/.style={draw=vnSteel,fill=white,rounded corners=2pt,text width=2.0cm,
+             minimum height=21mm,align=center,inner sep=3pt},
+  ar/.style={-{Latex[length=2mm]},vnSteel,thick}]
 
-    \vspace{2pt}
-    {\footnotesize Cần thiết vì Pre-RMSNorm nhạy với độ lớn đầu vào.}
-  \end{block}
-\end{column}
+  \node[io] (in) {Véc-tơ sau\\phép chiếu SALT};
+  \node[st,right=6mm of in] (s1)
+       {\textbf{1. Hiệu chỉnh độ lớn}\\[2pt]
+        $e_t \leftarrow e_t\dfrac{\mu_{\mathrm{neo}}}{\|e_t\|}$};
+  \node[st,right=6mm of s1] (s2)
+       {\textbf{2. Bias tần suất}\\[2pt]
+        $b_{\mathrm{dec},v}=\log p_v$};
+  \node[st,right=6mm of s2] (s3)
+       {\textbf{3. Thu nhỏ đầu ra}\\[2pt]
+        $y=\gamma W_{\mathrm{dec}}h+b_{\mathrm{dec}}$};
+  \node[io,right=6mm of s3,fill=vnNavy,text=white,draw=vnNavy] (out)
+       {\textbf{Mất mát đầu}\\[-1pt]$\approx$\,7,3 nat};
 
-\begin{column}{0.335\textwidth}
-  \begin{block}{2. Bias theo tần suất token}
-    \small
-    \[ b_{\mathrm{dec},v}=\log p_v \]
-    Khởi tạo bias đầu ra bằng log-tần-suất token tiếng Việt
-    \cit{Meister2023}.
+  \draw[ar] (in)--(s1);
+  \draw[ar] (s1)--(s2);
+  \draw[ar] (s2)--(s3);
+  \draw[ar] (s3)--(out);
 
-    \vspace{2pt}
-    {\footnotesize Mô hình khỏi tốn hàng nghìn bước chỉ để học lại phân phối
-    tần suất.}
-  \end{block}
-\end{column}
+  \node[below=2mm of s1,text=vnCite,font=\tiny,align=center]
+       {Pre-RMSNorm nhạy\\với độ lớn đầu vào};
+  \node[below=2mm of s2,text=vnCite,font=\tiny,align=center]
+       {khỏi học lại phân phối\\tần suất tiếng Việt};
+  \node[below=2mm of s3,text=vnCite,font=\tiny,align=center]
+       {để tín hiệu tần suất\\chi phối giai đoạn đầu};
+\end{tikzpicture}}
 
-\begin{column}{0.315\textwidth}
-  \begin{block}{3. Thu nhỏ trọng số đầu ra}
-    \small
-    \[ y=\gamma\,W_{\mathrm{dec}}h+b_{\mathrm{dec}},\;\; \gamma=0{,}1 \]
-    Để tín hiệu tần suất \emph{chi phối} giai đoạn đầu.
-
-    \vspace{2pt}
-    {\footnotesize Nhân vô hướng nên vẫn giữ nguyên hướng ngữ nghĩa mà SALT
-    dựng được.}
-  \end{block}
-\end{column}
-\end{columns}
-
-\vspace{0.5em}
+\vspace{1.0em}
 \begin{block}{Kết quả của ba bước: điểm xuất phát tốt hơn hẳn}
   \small
   Mất mát khởi điểm xấp xỉ \textbf{entropy unigram tiếng Việt}
   ($\approx$7,3 nat) thay vì mức đoán ngẫu nhiên $\log|V_t|\approx$
-  \textbf{10,3 nat} -- tức mô hình bắt đầu từ chỗ \emph{đã biết} phân phối
+  \hl{10,3 nat} -- tức mô hình bắt đầu từ chỗ \emph{đã biết} phân phối
   từ vựng tiếng Việt.
 \end{block}
 \end{frame}
